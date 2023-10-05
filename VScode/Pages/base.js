@@ -11,7 +11,9 @@ import User from './VScode/assets/User.svg';
 const base = () => (
   <SafeAreaView style={styles.container}>
     <ImageBackground source={require('./VScode/assets/background.png')} resizeMode="cover" style={styles.image}>
-      <View style={styles.Menubar}>
+      
+      
+        <View style={styles.Menubar}>
         
         <View style={styles.subMenu}>
             <Home   width={30} height={30} ></Home>
@@ -25,9 +27,7 @@ const base = () => (
         </View>
       </View>
 
-      <ScrollView  style={styles.scroll_screen}>
-
-      </ScrollView>
+      
       
       
     </ImageBackground>
@@ -69,14 +69,6 @@ const styles = StyleSheet.create({
     width:'100%'
     
 
-  },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000c0',
   },
   icon:{
     width:30,

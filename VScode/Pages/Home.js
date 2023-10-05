@@ -5,6 +5,7 @@ import Menu from './VScode/assets/Menu.svg';
 import Search from './VScode/assets/Search.svg';
 import Bag from './VScode/assets/Bag.svg';
 import User from './VScode/assets/User.svg';
+import Menu_bar from '../src/Menu_bar';
 
 
 

@@ -1,10 +1,7 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
-import Home from './VScode/assets/home.svg';
-import Menu from './VScode/assets/Menu.svg';
-import Search from './VScode/assets/Search.svg';
-import Bag from './VScode/assets/Bag.svg';
-import User from './VScode/assets/User.svg';
+
+ import Menu_bar from './VScode/src/Menu_bar';
 
 
 const item_menu = [
@@ -65,33 +62,43 @@ const App = () => (
     <ImageBackground source={require('./VScode/assets/background.png')} resizeMode="cover" style={styles.image}>
       <View style={styles.Menubar}>
         
-        <View style={styles.subMenu}>
-            <Home   width={30} height={30} ></Home>
-        </View>
-
-          <View style={styles.subMenu}>
-          <Search width={30} height={30}/>
-          <Bag width={30} height={30}/>
-          <User width={30} height={30} />
-          <Menu width={30} height={30} />
-        </View>
+      
+        <Menu_bar/>
       </View>
 
-      <ScrollView  style={styles.scroll_screen}>
+      
 
-       <FlatList
+        
+       <FlatList style={styles.scroll_screen}
         data={item_menu}
         renderItem={({item}) => 
           <View style={styles.item}>
               <Text style={styles.Title}>{item.name}</Text>
-              <Image source={item.pic1}  style={styles.image} ></Image>
-         </View>
+              <View style={{ flexDirection:'row', flex: 2, justifyContent:'space-between'}}>
+                
+                <View style={{ flexDirection:'column' , flex:1}}>
+                  <Image source={item.pic1}  style={styles.pic} ></Image>
+                  <Text style={styles.name}>{item.item1}</Text>
+                  <Text style={styles.price}>{item.price1}</Text> 
+               
+                </View>
+
+                <View style={{ flexDirection:'column', flex: 1}}>
+                  <Image source={item.pic2}  style={styles.pic}  ></Image>
+                  <Text  style={styles.name}>{item.item2}</Text>
+                  <Text style={styles.price}>{item.price2}</Text> 
+               
+                </View>
+               </View>
+
+               <Text style={styles.see_all}> See all</Text>
+          </View>
       }
         keyExtractor={item => item.id}
       /> 
 
         
-      </ScrollView>
+      
       
       
     </ImageBackground>
@@ -105,8 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width:'40%',
-    height: 'auto',
+    flex:1,
     justifyContent: 'center',
   },
   Menubar:{
@@ -121,39 +127,22 @@ const styles = StyleSheet.create({
 
      
   },
-  subMenu:{
-
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'space-between'
-
-  },
+  
   scroll_screen:{
-    backgroundColor:'white',
+    // backgroundColor:'white',
     height:'90%',
-    width:'100%'
+    width:'100%',
+    
     
 
   },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000c0',
-  },
-  icon:{
-    width:30,
-    height:30,
-    justifyContent:'flex-end'
-  },
+  
+  
   item:{
        flexDirection:'column',
-      height: 250,
-      width: 260,
-      color:'white',
-      padding: 25,
+     
+      // backgroundColor:'white',
+      margin: 25,
       
   },
   Title:{
@@ -162,6 +151,40 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     textTransform:'uppercase'
-  }
+  },
+  name:{
+    fontSize:15,
+    width:150,
+    color:'white',
+    fontWeight:"800",
+    textAlign:'center',
+    textTransform:'uppercase'
+  },
+  price:{
+
+    fontSize:13,
+    width:150,
+    color:'white',
+    // fontWeight:"normal",
+    textAlign:'center',
+    textTransform:'uppercase'
+  },
+  pic:{
+    width: 150,
+    height:150,
+    alignItems:'center',
+   
+   
+   
+    
+   
+  },
+  see_all:{
+    color: '#9FF8EF',
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    textTransform:'uppercase'
+  },
 });
 export default App;
