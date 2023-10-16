@@ -1,37 +1,107 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView} from 'react-native';
-import Home from './VScode/assets/home.svg';
-import Menu from './VScode/assets/Menu.svg';
-import Search from './VScode/assets/Search.svg';
-import Bag from './VScode/assets/Bag.svg';
-import User from './VScode/assets/User.svg';
+import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
+
 import Menu_bar from '../src/Menu_bar';
 
 
+const item_menu = [
+  {id:'1',
+  name:'Best Seller',
+  item1: 'Chuck Taylor High Top',
+  price1:'1.000.000VND',
+  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
+  item2: 'Chuck Taylor Low Top',
+  price2:'1.000.000VND',
+  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+
+},
+{id:'2',
+  name:'Chuck Taylor',
+  item1: 'Chuck Taylor High Top',
+  price1:'1.000.000VND',
+  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
+  item2: 'Chuck Taylor Low Top',
+  price2:'1.000.000VND',
+  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+
+},
+{id:'3',
+  name:'Chuck 70',
+  item1: 'Chuck Taylor High Top',
+  price1:'1.000.000VND',
+  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
+  item2: 'Chuck Taylor Low Top',
+  price2:'1.000.000VND',
+  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+
+},
+{id:'4',
+  name:'One Star Pro',
+  item1: 'Chuck Taylor High Top',
+  price1:'1.000.000VND',
+  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
+  item2: 'Chuck Taylor Low Top',
+  price2:'1.000.000VND',
+  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+
+},
+{id:'5',
+  name:'Run Hike Platform',
+  item1: 'Chuck Taylor High Top',
+  price1:'1.000.000VND',
+  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
+  item2: 'Chuck Taylor Low Top',
+  price2:'1.000.000VND',
+  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+
+}
+];
+
 
 const Home = () => (
-  <SafeAreaView style={styles.container}>
-    <ImageBackground source={require('./VScode/assets/background.png')} resizeMode="cover" style={styles.image}>
+  <SafeAreaView 
+  
+  style={styles.container}>
+    <ImageBackground style={styles.background}
+    
+   source= { require('../assets/background.png')}
+  resizeMode="cover">
       <View style={styles.Menubar}>
         
-        <View style={styles.subMenu}>
-            <Home   width={30} height={30} ></Home>
-        </View>
-
-          <View style={styles.subMenu}>
-          <Search width={30} height={30}/>
-          <Bag width={30} height={30}/>
-          <User width={30} height={30} />
-          <Menu width={30} height={30} />
-        </View>
+        <Menu_bar/>
       </View>
 
-      <ScrollView  style={styles.scroll_screen}>
+      <FlatList style={styles.scroll_screen}
+        data={item_menu}
+        renderItem={ ({item}) => 
+          <View style={styles.item}>
+              <Text style={styles.Title}>{item.name}</Text>
+              <View style={{ flexDirection:'row', flex: 2, justifyContent:'space-between'}}>
+                
+                <View style={{ flexDirection:'column' , flex:1}}>
+                  <Image source={item.pic1}  style={styles.pic} ></Image>
+                  <Text style={styles.name}>{item.item1}</Text>
+                  <Text style={styles.price}>{item.price1}</Text> 
+               
+                </View>
 
-      </ScrollView>
-      
+                <View style={{ flexDirection:'column', flex: 1}}>
+                  <Image source={item.pic2}  style={styles.pic}  ></Image>
+                  <Text  style={styles.name}>{item.item2}</Text>
+                  <Text style={styles.price}>{item.price2}</Text> 
+               
+                </View>
+               </View>
+
+               <Text style={styles.see_all}> See all</Text>
+          </View>
+      }
+        keyExtractor={item => item.id}
+      /> 
+    
       
     </ImageBackground>
+    
   </SafeAreaView>
 );
 
@@ -48,41 +118,76 @@ const styles = StyleSheet.create({
   Menubar:{
     
      
-      height:'10%',
+      height:'8%',
       width:'100%',
       flexDirection:'row',
       padding:25,
-      paddingTop:30,
+      paddingTop:20,
       flex:2
 
      
   },
-  subMenu:{
-
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'space-between'
-
+  background:{
+    flex: 1,
+    justifyContent  :'center'
   },
+  
   scroll_screen:{
-    backgroundColor:'white',
+    // backgroundColor:'white',
     height:'90%',
-    width:'100%'
+    width:'100%',
+    
     
 
   },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000c0',
-  },
-  icon:{
-    width:30,
-    height:30,
-    justifyContent:'flex-end'
-  }
+  item:{
+    flexDirection:'column',
+  
+   // backgroundColor:'white',
+   margin: 25,
+   
+},
+Title:{
+ color: '#9FF8EF',
+ fontSize: 22,
+ fontWeight: 'bold',
+ textAlign: 'left',
+ textTransform:'uppercase'
+},
+name:{
+ fontSize:15,
+ width:150,
+ color:'white',
+ fontWeight:"800",
+ textAlign:'center',
+ textTransform:'uppercase'
+},
+price:{
+
+ fontSize:13,
+ width:150,
+ color:'white',
+ // fontWeight:"normal",
+ textAlign:'center',
+ textTransform:'uppercase'
+},
+pic:{
+ width: 150,
+ height:150,
+ alignItems:'center',
+
+
+
+ 
+
+},
+see_all:{
+ color: '#9FF8EF',
+ fontSize: 12,
+ fontWeight: 'bold',
+ textAlign: 'right',
+ textTransform:'uppercase'
+},
+  
 });
 export default Home;

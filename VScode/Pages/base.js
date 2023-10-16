@@ -1,16 +1,16 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView} from 'react-native';
-import Home from './VScode/assets/home.svg';
-import Menu from './VScode/assets/Menu.svg';
-import Search from './VScode/assets/Search.svg';
-import Bag from './VScode/assets/Bag.svg';
-import User from './VScode/assets/User.svg';
+import Home from '../assets/home.svg';
+import Menu from '../assets/Menu.svg';
+import Search from '../assets/Search.svg';
+import Bag from '../assets/Bag.svg';
+import User from '../assets/User.svg';
 
 
 
 const base = () => (
   <SafeAreaView style={styles.container}>
-    <ImageBackground source={require('./VScode/assets/background.png')} resizeMode="cover" style={styles.image}>
+    
       
       
         <View style={styles.Menubar}>
@@ -30,7 +30,7 @@ const base = () => (
       
       
       
-    </ImageBackground>
+    
   </SafeAreaView>
 );
 

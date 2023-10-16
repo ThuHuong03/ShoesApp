@@ -1,109 +1,155 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Menu from './VScode/assets/Menu.svg';
+import Home from './VScode/Pages/Home';
+import User_white from './VScode/assets/User_white.svg';
+import Favorite from './VScode/assets/Favorite_fill.svg';
+import Order from './VScode/assets/Order.svg';
+import Bag_white from './VScode/assets/Bag_white.svg';
+import Help_icon from './VScode/assets/help.svg';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Signin from './VScode/Pages/Signin';
+import Signup from './VScode/Pages/Signup';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
- import Menu_bar from './VScode/src/Menu_bar';
+const Stack= createNativeStackNavigator();
 
+function CHUCK_TAYLOR() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Chuck_Taylor Screen</Text>
+    </View>
+  );
+}
 
-const item_menu = [
-      {id:'1',
-      name:'Best Seller',
-      item1: 'Chuck Taylor High Top',
-      price1:'1.000.000VND',
-      pic1: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-      item2: 'Chuck Taylor Low Top',
-      price2:'1.000.000VND',
-      pic2: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+function CHUCK_70(){
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>chuck_70 Screen</Text>
+    </View>
+  );
+}
 
-    },
-    {id:'2',
-      name:'Chuck Taylor',
-      item1: 'Chuck Taylor High Top',
-      price1:'1.000.000VND',
-      pic1: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-      item2: 'Chuck Taylor Low Top',
-      price2:'1.000.000VND',
-      pic2: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+ function ONE_STAR(){
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>One_Star Screen</Text>
+    </View>
+  );
+ }
+  
+ function RUN_HIKE(){
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Run_Hike Screen</Text>
+    </View>
+  );
+ }
 
-    },
-    {id:'3',
-      name:'Chuck 70',
-      item1: 'Chuck Taylor High Top',
-      price1:'1.000.000VND',
-      pic1: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-      item2: 'Chuck Taylor Low Top',
-      price2:'1.000.000VND',
-      pic2: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
+  function Profile(){
 
-    },
-    {id:'4',
-      name:'One Star Pro',
-      item1: 'Chuck Taylor High Top',
-      price1:'1.000.000VND',
-      pic1: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-      item2: 'Chuck Taylor Low Top',
-      price2:'1.000.000VND',
-      pic2: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-    },
-    {id:'5',
-      name:'Run Hike Platform',
-      item1: 'Chuck Taylor High Top',
-      price1:'1.000.000VND',
-      pic1: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-      item2: 'Chuck Taylor Low Top',
-      price2:'1.000.000VND',
-      pic2: require('./VScode/assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-    }
-];
-
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <ImageBackground source={require('./VScode/assets/background.png')} resizeMode="cover" style={styles.image}>
-      <View style={styles.Menubar}>
-        
-      
-        <Menu_bar/>
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Profile Screen</Text>
       </View>
+    );
+  }
 
-      
+  function Bag (){
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>bag Screen</Text>
+      </View>
+    );
+  }
+  function Oder(){
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Oder Screen</Text>
+      </View>
+    );
+  }
+  function Favorites(){
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Favorites Screen</Text>
+      </View>
+    );
+  }
+ function Help(){
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Help Screen</Text>
+    </View>
+  );
+ }
+const Drawer = createDrawerNavigator();
 
+function MyDrawer() {
+  return (
+    <Drawer.Navigator 
+    
+    screenOptions={{
+      headerShown : false,
+      drawerPosition: 'right',
+      drawerActiveTintColor: '#9FF8EF',
+      drawerInactiveTintColor: 'white',
+      drawerActiveBackgroundColor:'#232832',
+      drawerInactiveBackgroundColor:'#232832',
+      drawerStyle:{
+        backgroundColor: '#232832',
         
-       <FlatList style={styles.scroll_screen}
-        data={item_menu}
-        renderItem={({item}) => 
-          <View style={styles.item}>
-              <Text style={styles.Title}>{item.name}</Text>
-              <View style={{ flexDirection:'row', flex: 2, justifyContent:'space-between'}}>
-                
-                <View style={{ flexDirection:'column' , flex:1}}>
-                  <Image source={item.pic1}  style={styles.pic} ></Image>
-                  <Text style={styles.name}>{item.item1}</Text>
-                  <Text style={styles.price}>{item.price1}</Text> 
-               
-                </View>
-
-                <View style={{ flexDirection:'column', flex: 1}}>
-                  <Image source={item.pic2}  style={styles.pic}  ></Image>
-                  <Text  style={styles.name}>{item.item2}</Text>
-                  <Text style={styles.price}>{item.price2}</Text> 
-               
-                </View>
-               </View>
-
-               <Text style={styles.see_all}> See all</Text>
-          </View>
       }
-        keyExtractor={item => item.id}
-      /> 
+    }}
+    >
+      
+      <Drawer.Screen name="New & Featured " component={Home}  />
+      <Drawer.Screen name="CHUCK TAYLOR" component={CHUCK_TAYLOR} />
+      <Drawer.Screen name="CHUCK 70" component={CHUCK_70} />
+      <Drawer.Screen name="ONE STAR" component={ONE_STAR} />
+      <Drawer.Screen name="RUN HIKE" component={RUN_HIKE} />
+      <Drawer.Screen name="Profile" component={Profile} 
+      options={{
+        drawerIcon: ()=> (<User_white  style={{ with: 30, height: 30}}/>),
+            
+      }}
+      />
+      <Drawer.Screen name="Bag" component={Bag} 
+      options={{drawerIcon: ()=> (<Bag_white  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="Oder" component={Oder} 
+      options={{drawerIcon: ()=> (<Order  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="Favorites" component={Favorites} 
+      options={{drawerIcon: ()=> (<Favorite  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="Help" component={Help} 
+      options={{drawerIcon: ()=> (<Help_icon  style={{ with: 30, height: 30}}/>)}}/>
 
-        
+    </Drawer.Navigator>
+  );
+}
+
+const App= ()=> {
+  return (
+    <NavigationContainer >
+      
+    <Stack.Navigator initialRouteName='Signin'
+    screenOptions={
+      {headerShown: false}
+    }
+    >
+    <Stack.Screen name="Signin" component={Signin}/>
+    <Stack.Screen name="Signup" component={Signup}/>
+    <Stack.Screen name="Main" component={MyDrawer}/>
+    </Stack.Navigator>
       
       
-      
-    </ImageBackground>
-  </SafeAreaView>
-);
+    </NavigationContainer>
+
+    
+  );
+}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -138,53 +184,6 @@ const styles = StyleSheet.create({
   },
   
   
-  item:{
-       flexDirection:'column',
-     
-      // backgroundColor:'white',
-      margin: 25,
-      
-  },
-  Title:{
-    color: '#9FF8EF',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    textTransform:'uppercase'
-  },
-  name:{
-    fontSize:15,
-    width:150,
-    color:'white',
-    fontWeight:"800",
-    textAlign:'center',
-    textTransform:'uppercase'
-  },
-  price:{
-
-    fontSize:13,
-    width:150,
-    color:'white',
-    // fontWeight:"normal",
-    textAlign:'center',
-    textTransform:'uppercase'
-  },
-  pic:{
-    width: 150,
-    height:150,
-    alignItems:'center',
-   
-   
-   
-    
-   
-  },
-  see_all:{
-    color: '#9FF8EF',
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'right',
-    textTransform:'uppercase'
-  },
+  
 });
 export default App;
