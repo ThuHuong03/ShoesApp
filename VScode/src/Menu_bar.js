@@ -21,7 +21,13 @@ const Menu_bar = () => {
         <View style={{ flexDirection: 'row',   flex: 2}}>
         
         <View style={styles.subMenu}>
+          <TouchableOpacity style={styles.icon} onPress={
+            ()  => {
+              navigation.navigate('New & Featured ')
+            }
+          }>
             <Home   width={30} height={30} ></Home>
+            </TouchableOpacity>
         </View>
 
           <View style={styles.subMenu}>

@@ -13,13 +13,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Signin from './VScode/Pages/Signin';
 import Signup from './VScode/Pages/Signup';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Menu_bar from './VScode/src/Menu_bar';
 
 const Stack= createNativeStackNavigator();
 
 function CHUCK_TAYLOR() {
   return (
+    
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Chuck_Taylor Screen</Text>
+      <Menu_bar/>
     </View>
   );
 }
