@@ -4,9 +4,7 @@ import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import Signup from './Signup'
+
 
 
 
