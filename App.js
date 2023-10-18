@@ -12,6 +12,7 @@ import Help_icon from './VScode/assets/help.svg';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Signin from './VScode/Pages/Signin';
 import Signup from './VScode/Pages/Signup';
+import List from './VScode/Pages/List';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu_bar from './VScode/src/Menu_bar';
 
@@ -136,11 +137,12 @@ const App= ()=> {
   return (
     <NavigationContainer >
       
-    <Stack.Navigator initialRouteName='Signin'
+    <Stack.Navigator initialRouteName='List'
     screenOptions={
       {headerShown: false}
     }
     >
+      <Stack.Screen name="List" component={List}/>
     <Stack.Screen name="Signin" component={Signin}/>
     <Stack.Screen name="Signup" component={Signup}/>
     <Stack.Screen name="Main" component={MyDrawer}/>
@@ -148,6 +150,8 @@ const App= ()=> {
       
       
     </NavigationContainer>
+
+    
 
     
   );

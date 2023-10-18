@@ -32,8 +32,22 @@ const Menu_bar = () => {
 
           <View style={styles.subMenu}>
           <Search width={30} height={30}/>
-          <Bag width={30} height={30}/>
-          <User width={30} height={30} />
+
+          <TouchableOpacity style={styles.icon} onPress={
+            ()  => {
+              navigation.navigate('Bag')
+            }
+          }>
+            <Bag   width={30} height={30} ></Bag>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.icon} onPress={
+            ()  => {
+              navigation.navigate('Profile')
+            }
+          }>
+            <User   width={30} height={30} ></User>
+            </TouchableOpacity>
+          
           <TouchableOpacity style={styles.icon} onPress={
             ()  => {
               navigation.dispatch(DrawerActions.toggleDrawer())

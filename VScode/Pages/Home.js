@@ -1,61 +1,9 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
-
+import {item_menu} from '../src/data.js'
 import Menu_bar from '../src/Menu_bar';
 
 
-const item_menu = [
-  {id:'1',
-  name:'Best Seller',
-  item1: 'Chuck Taylor High Top',
-  price1:'1.000.000VND',
-  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-  item2: 'Chuck Taylor Low Top',
-  price2:'1.000.000VND',
-  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-},
-{id:'2',
-  name:'Chuck Taylor',
-  item1: 'Chuck Taylor High Top',
-  price1:'1.000.000VND',
-  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-  item2: 'Chuck Taylor Low Top',
-  price2:'1.000.000VND',
-  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-},
-{id:'3',
-  name:'Chuck 70',
-  item1: 'Chuck Taylor High Top',
-  price1:'1.000.000VND',
-  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-  item2: 'Chuck Taylor Low Top',
-  price2:'1.000.000VND',
-  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-},
-{id:'4',
-  name:'One Star Pro',
-  item1: 'Chuck Taylor High Top',
-  price1:'1.000.000VND',
-  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-  item2: 'Chuck Taylor Low Top',
-  price2:'1.000.000VND',
-  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-},
-{id:'5',
-  name:'Run Hike Platform',
-  item1: 'Chuck Taylor High Top',
-  price1:'1.000.000VND',
-  pic1: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg'),
-  item2: 'Chuck Taylor Low Top',
-  price2:'1.000.000VND',
-  pic2: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-
-}
-];
 
 
 const Home = () => (
