@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import { MyContext } from '../src/MyContext'
 
 
 
@@ -11,6 +12,12 @@ import { TouchableOpacity } from 'react-native'
 export default function Signin({navigation}) {
     const [Email, onChangeEmail] = useState('');
     const [Password, onChangePassword] = useState('');
+    const Auth = useContext(MyContext);
+
+    const SignIn = ()=>{
+      
+      Auth.Signin();
+    }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +50,7 @@ export default function Signin({navigation}) {
             
 
             <TouchableOpacity style={styles.button}
-            onPress={()=>{ navigation.navigate('Main')}}
+            onPress={SignIn}
             >
             <Text style={styles.buttonText}> Sign in</Text>
              </TouchableOpacity>

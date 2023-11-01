@@ -1,34 +1,46 @@
-import { View, Text, SafeAreaView, StyleSheet, ImageBackground,Image, SectionList } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, ImageBackground,Image, FlatList , Dimensions} from 'react-native'
 import React from 'react'
 import {Data} from '../src/data'
 import Menu_bar from '../src/Menu_bar'
 
-export default function List() {
+
+export default function List({Title}) {
+ 
+  const List_Data = Data.filter(data => data.title== Title);
+
   return (
     <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.ImageBackground} source={require('../assets/background.png')}>
             <View style={styles.Menubar}>
             <Menu_bar/>
             </View>
-
+           
             <View style={styles.scroll_screen}>
-
-                <SectionList  
-                sections={Data}
-                keyExtractor={(data) =>data.id}
-                renderItem={({item}) =>
-            
-                <View style={{ flexDirection:'column', flex: 1}}>
-
-                    <Image source={item.image}  style={styles.pic}  ></Image>
+                <View>
+                    <Text style={styles.Title}>{Title}</Text>
+               </View>
+                <FlatList  
+                data={List_Data}
+                keyExtractor={item=> item.id}
+                numColumns={2}
+                renderItem={({item})=>
+                  
+                  
+                    
+                  <View style={styles.listItem}>
+                  <Image source={item.image}  style={styles.pic}  ></Image>
                   <Text  style={styles.name}>{item.name}</Text>
                   <Text style={styles.price}>{item.price}</Text> 
+               
                 </View>
-            }   
-                >
+              
+              
+                 }
+                
+                />
 
 
-                </SectionList>
+               
                 </View>
         </ImageBackground>
 
@@ -47,13 +59,7 @@ const styles= StyleSheet.create({
       justifyContent  :'center',
       alignItems: 'center'
     },
-    title:{
-        color: '#9FF8EF',
-        fontSize: 30,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        textTransform:'uppercase'
-    },
+    
     Menubar:{
     
      
@@ -75,6 +81,18 @@ const styles= StyleSheet.create({
     
       },
      
+        listItem: {
+         padding: 10,
+         paddingBottom: 10,
+          width: Dimensions.get('window').width / 2 - 40,
+          margin:15,
+         alignContent: 'center',
+         alignItems: 'center',
+
+          
+        },
+      
+     
        name:{
         fontSize:15,
         width:150,
@@ -93,9 +111,18 @@ const styles= StyleSheet.create({
         textTransform:'uppercase'
        },
        pic:{
-        width: 150,
-        height:150,
+        width: 200,
+        height:200,
         alignItems:'center',},
+
+      Title:{
+          color: '#9FF8EF',
+          fontSize: 22,
+          fontWeight: 'bold',
+          textAlign: 'left',
+          marginLeft: 25,
+          textTransform:'uppercase'
+         },
 
        
        

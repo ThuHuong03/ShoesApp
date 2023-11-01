@@ -2,11 +2,19 @@ import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
 import {item_menu} from '../src/data.js'
 import Menu_bar from '../src/Menu_bar';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 
-const Home = () => (
+export default function Home  () {
+  const navigation = useNavigation();
+  const ToggleSeeAll= (item)=>{
+    navigation.navigate('SeeAll',{Title: item.item.name})
+   
+  }
+  return(
   <SafeAreaView 
   
   style={styles.container}>
@@ -41,7 +49,7 @@ const Home = () => (
                 </View>
                </View>
 
-               <Text style={styles.see_all}> See all</Text>
+               <TouchableOpacity onPress={ ()=>  ToggleSeeAll({item})  } ><Text style={styles.see_all}> See all</Text></TouchableOpacity>
           </View>
       }
         keyExtractor={item => item.id}
@@ -51,7 +59,7 @@ const Home = () => (
     </ImageBackground>
     
   </SafeAreaView>
-);
+)};
 
 const styles = StyleSheet.create({
   container: {
@@ -138,4 +146,3 @@ see_all:{
 },
   
 });
-export default Home;

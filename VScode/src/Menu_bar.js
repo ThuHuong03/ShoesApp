@@ -23,7 +23,7 @@ const Menu_bar = () => {
         <View style={styles.subMenu}>
           <TouchableOpacity style={styles.icon} onPress={
             ()  => {
-              navigation.navigate('New & Featured ')
+              navigation.navigate('Main')
             }
           }>
             <Home   width={30} height={30} ></Home>

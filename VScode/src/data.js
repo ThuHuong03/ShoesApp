@@ -53,11 +53,11 @@ export const item_menu = [
 
   export const Data= [
 
-    {
-        title: "Best Seller",
-        data:[
+          
+       
             {
                 id: 1,
+                title: "Best Seller",
                 name: "Chuck Taylor High Top",
                 price: "1.000.000VND",
                 color: "black",
@@ -66,20 +66,21 @@ export const item_menu = [
             },
             {
                 id: 2,
+                title: "Best Seller",
                 name: "Chuck Taylor Low Top",
                 price: "1.000.000VND",
                 color: "black",
                 type: "low top",
                 image: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
 
-            }]
-    },
+            },
+    
 
-    {
-        title: "Chuck Taylor",
+   
 
-        data:[
+        
             {   id: 3,
+                title: "Chuck Taylor",
                 name: "Chuck Taylor High Top",
                 price: "1.000.000VND",
                 color: "black",
@@ -88,19 +89,19 @@ export const item_menu = [
             },
             {
                 id: 4,
+                title: "Chuck Taylor",
                 name: "Chuck Taylor Low Top",
                 price: "1.000.000VND",
                 color: "black",
                 type: "low top",
                 image: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
-            }
-        ]
-    },
-    {
-        title: "Chuck 70",
-        data:[
+            },
+        
+
+        
             {
                 id: 5,
+                title: "Chuck 70",
                 name: "Chuck Taylor High Top",
                 price: "1.000.000VND",
                 color: "black",
@@ -109,20 +110,20 @@ export const item_menu = [
             },
             {
                 id: 6,
+                title: "Chuck 70",
                 name: "Chuck Taylor Low Top",
                 price: "1.000.000VND",
                 color: "black",
                 type: "low top",
                 image: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
 
-            }]
-    },
+            },
+   
 
-    {
-        title: "One Star Pro",
-        data:[
+  
             {
                 id: 7,
+                title: "One Star Pro",
                 name: "Chuck Taylor High Top",
                 price: "1.000.000VND",
                 color: "black",
@@ -131,20 +132,19 @@ export const item_menu = [
             },
             {
                 id: 8,
+                title: "One Star Pro",
                 name: "Chuck Taylor Low Top",
                 price: "1.000.000VND",
                 color: "black",
                 type: "low top",
                 image: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
 
-            }]
-    },
-
-    {
-        title: "Run Hike Platform",
-        data:[
+            },
+   
+  
             {
                 id: 9,
+                title: "Run Hike Platform",
                 name: "Chuck Taylor High Top",
                 price: "1.000.000VND",
                 color: "black",
@@ -153,12 +153,12 @@ export const item_menu = [
             },
             {
                 id: 10,
+                title: "Run Hike Platform",
                 name: "Chuck Taylor Low Top",
                 price: "1.000.000VND",
                 color: "black",
                 type: "low top",
                 image: require('../assets/Converse.1.Chuck_Taylor.Black_High_1.jpg')
 
-            }]
-    }
+            }
   ];

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView, Button, ImageBackground, TextInput, TouchableOpacity } from 'react-native'
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
+import { MyContext } from '../src/MyContext';
 
 
 
@@ -68,6 +69,10 @@ export default function Signup({navigation}) {
   const toggleVisibility = ()=>{
       setIsvisible(!Isvisible);
   }
+  const Auth= useContext(MyContext);
+  const SignUp = ()=>{
+    Auth.Signin();
+  }
   
   
     return (
@@ -83,7 +88,7 @@ export default function Signup({navigation}) {
             <Text style={styles.buttonText}> Next</Text>
              </TouchableOpacity>}
         {!Isvisible &&<TouchableOpacity style={styles.button}
-            onPress={()=> {navigation.navigate('Main'); }}
+            onPress={SignUp}
             >
             <Text style={styles.buttonText}> SIGN UP</Text>
              </TouchableOpacity>}
