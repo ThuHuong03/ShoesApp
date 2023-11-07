@@ -2,10 +2,16 @@ import { View, Text, SafeAreaView, StyleSheet, ImageBackground,Image, FlatList ,
 import React from 'react'
 import {Data} from '../src/data'
 import Menu_bar from '../src/Menu_bar'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function List({Title}) {
- 
+  navigation= useNavigation();
+  const ClickItem = (item) =>{
+    navigation.navigate('Item', {ID: item.id})
+   
+  } 
   const List_Data = Data.filter(data => data.title== Title);
 
   return (
@@ -26,14 +32,14 @@ export default function List({Title}) {
                 renderItem={({item})=>
                   
                   
-                    
+                    <TouchableOpacity onPress={() =>ClickItem(item)}>
                   <View style={styles.listItem}>
                   <Image source={item.image}  style={styles.pic}  ></Image>
                   <Text  style={styles.name}>{item.name}</Text>
                   <Text style={styles.price}>{item.price}</Text> 
                
                 </View>
-              
+                  </TouchableOpacity>
               
                  }
                 
