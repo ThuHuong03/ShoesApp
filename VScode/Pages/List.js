@@ -34,7 +34,7 @@ export default function List({Title}) {
                   
                     <TouchableOpacity onPress={() =>ClickItem(item)}>
                   <View style={styles.listItem}>
-                  <Image source={item.image[0]}  style={styles.pic}  ></Image>
+                  <Image source={item.image}  style={styles.pic}  ></Image>
                   <Text  style={styles.name}>{item.name}</Text>
                   <Text style={styles.price}>{item.price}</Text> 
                
@@ -90,7 +90,7 @@ const styles= StyleSheet.create({
         listItem: {
          padding: 10,
          paddingBottom: 10,
-          width: Dimensions.get('window').width / 2 - 50,
+          width: Dimensions.get('window').width / 2 - 40,
           margin:15,
          alignContent: 'center',
          alignItems: 'center',
