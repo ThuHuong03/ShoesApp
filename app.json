@@ -4,10 +4,10 @@
     "slug": "ShoesApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./VScode/assets/icon.png",
+    "icon": "./Components/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./VScode/assets/splash.png",
+      "image": "./Components/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./VScode/assets/adaptive-icon.png",
+        "foregroundImage": "./Components/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./VScode/assets/favicon.png"
+      "favicon": "./Components/assets/favicon.png"
     }
   }
   

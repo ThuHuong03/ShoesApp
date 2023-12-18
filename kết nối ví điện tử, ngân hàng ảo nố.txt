@@ -1,0 +1,15 @@
+kết nối ví điện tử, ngân hàng ảo nối API
+FOLDER SOURCE CODE
+VIDEO DEMO: set up hệ thống,, các tính năng
+1 file word
+1 file ppt
+
+
+
+
+
+app bán trang sức:
+ko có các chức năng của admin
+ko có trang tin tức/ giới thiệu
+ko có trang dịch vụ
+các hình ảnh sp với banner còn bị thiếu
