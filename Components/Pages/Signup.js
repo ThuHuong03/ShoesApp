@@ -1,29 +1,30 @@
-import { View, Text, StyleSheet, SafeAreaView, Button, ImageBackground, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, Button, ImageBackground, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React,{useContext, useState} from 'react'
 import { MyContext } from '../src/MyContext';
+import axios from 'axios';
 
 
 
 
     
-function Signup_1(){
+function Signup_1({Email, Password, ConfirmPassword, onChangeEmail, onChangePassword, onChangeConfirmPassword}){
     return (
       <View style={styles.inputContainer}>
        <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text)=> onChangeEmail(text)}
+        value={Email}
         placeholder='Email Address'
          placeholderTextColor='#69A09E'
        ></TextInput>
        <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text)=> onChangePassword(text)}
+        value={Password}
         placeholder='Password'
          placeholderTextColor='#69A09E'
        ></TextInput>
        <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text)=>onChangeConfirmPassword(text)}
+        value={ConfirmPassword}
         placeholder='Confirm Password'
          placeholderTextColor='#69A09E'
        ></TextInput>
@@ -32,30 +33,24 @@ function Signup_1(){
     )
 }
 
-function Signup_2(){
+function Signup_2({UserName,Phone, Address, onChangeAddress, onChangePhone, onChangeUsername }){
     return (
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text)=>onChangeUsername(text)}
+        value={UserName}
         placeholder='Full Name'
          placeholderTextColor='#69A09E'
        ></TextInput>
        <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text) => onChangePhone(text)}
+        value={Phone}
         placeholder='Phone Number'
          placeholderTextColor='#69A09E'
-       ></TextInput>
+       ></TextInput>  
        <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
-        placeholder='Birthday'
-         placeholderTextColor='#69A09E'
-       ></TextInput>
-       <TextInput style={styles.inputText}
-        // onChangeText={onChangePassword}
-        // value={Password}
+        onChangeText={(text) => onChangeAddress(text)}
+        value={Address}
         placeholder='Address'
          placeholderTextColor='#69A09E'
        ></TextInput>
@@ -67,21 +62,94 @@ export default function Signup({navigation}) {
   const [Isvisible, setIsvisible] = useState(true);
 
   const toggleVisibility = ()=>{
-      setIsvisible(!Isvisible);
+    if(Email == '')
+    {
+      Alert.alert("Notice", "Please enter your email address");
+      return;
+    }
+    else if(Password== '')
+     {
+      Alert.alert("Notice", "Please enter your password");
+      return;
+     }
+
+    else if(ConfirmPassword!== Password || ConfirmPassword== '')
+     {
+      Alert.alert("Notice", "Please enter your Confirm Password matches the Password");
+      return;
+     }
+
+    else setIsvisible(!Isvisible);
   }
   const Auth= useContext(MyContext);
+  const {Localhost}= Auth;
   const SignUp = ()=>{
-    Auth.Signin();
+    if(UserName =='' || Phone=='' || Address =='')
+    {
+      Alert.alert("Notice", "Please fill your Name, Phone Number and Address");
+      
+
+    }
+    else{
+    // Auth.Signin();
+    navigation.navigate("Signin");
+    axios.post(`${Localhost}register.php`, 
+      {
+        email: Email,
+        password: Password,
+        name: UserName,
+        phone: Phone,
+        address: Address,
+      }
+      
+      )
+      .then((res)=> {
+        if(res.data=="THANH_CONG")
+          {
+            Alert.alert("Congratulations", "You have successfully registered");
+            
+        }
+        else 
+        Alert.alert("Sorry","This Email is already registered")
+      })
+      .catch((err)=> console.log(err))
+
+    }
   }
+  const [Email, setEmail]= useState('');
   
-  
+  const [Password, setPassword]= useState('');
+  const [ConfirmPassword, setConfirmPassword]= useState('');
+  const [UserName, setUserName]= useState('');
+  const [Phone, setPhone]= useState('');
+  const [Address, setAddress]= useState('');
+
+  function onChangeEmail(Text){
+      setEmail(Text);
+  }
+
+   function onChangePassword(Text){
+    setPassword(Text);
+   }
+   function onChangePhone(Text){
+    setPhone(Text);
+   }
+   function onChangeAddress(Text){
+    setAddress(Text);
+   }
+   function onChangeConfirmPassword(Text){
+    setConfirmPassword(Text);
+   }
+   function onChangeUserName (  Text){
+    setUserName(Text);
+   }
     return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={require('../assets/background.png')} style= {styles.background}>
         <Text style={styles.title}> Sign Up</Text>
         
-        {Isvisible && <Signup_1/>}
-        {!Isvisible && <Signup_2/>}
+        {Isvisible && <Signup_1 Email={Email} Password={Password} ConfirmPassword={ConfirmPassword} onChangeEmail={onChangeEmail} onChangePassword={onChangePassword} onChangeConfirmPassword={onChangeConfirmPassword}/>}
+        {!Isvisible && <Signup_2 UserName={UserName} Phone={Phone} Address={Address} onChangeAddress={onChangeAddress} onChangePhone={onChangePhone} onChangeUsername={onChangeUserName}/>}
         {Isvisible &&<TouchableOpacity style={styles.button}
             onPress={toggleVisibility}
             >

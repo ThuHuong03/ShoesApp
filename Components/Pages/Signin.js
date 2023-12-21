@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, Alert } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { MyContext } from '../src/MyContext'
+import axios from 'axios'
 
 
 
@@ -13,10 +14,46 @@ export default function Signin({navigation}) {
     const [Email, onChangeEmail] = useState('');
     const [Password, onChangePassword] = useState('');
     const Auth = useContext(MyContext);
-
+    const {Localhost}= Auth;
     const SignIn = ()=>{
-      
-      Auth.Signin();
+      if(Email =='')
+      {
+        Alert.alert("Notice", "Please enter your email");
+        return;
+      }
+      else if(Password =='')
+      {
+        Alert.alert("Notice", "Please enter your password");
+        return;
+      }
+
+      else{
+        axios.post(`${Localhost}login.php`,
+        {
+          // email: Email,
+          // password: Password
+          email: "1@gmail.com",
+          password: "1"
+        })
+        .then(((res)=>{
+
+          if(res.data =="SAI_THONG_TIN_DANG_NHAP")
+          {
+            Alert.alert("Notice", "Youe Email or Password is incorrect! Please try again");
+            onChangeEmail('');
+            onChangePassword('');
+          }
+          else {
+            Alert.alert("Congratulations", "You have successfully signed in!");
+            // console.log("data", res.data.user);
+            Auth.Signin(res.data);
+          }
+        })
+        )
+        .catch(err=> console.log(err));
+
+        
+      }      
     }
 
   return (

@@ -6,9 +6,11 @@ $obj = json_decode($json, true);
 $name = $obj['name'];
 $email = $obj['email'];
 $password = md5($obj['password']);
+$phone= $obj['phone'];
+$address= $obj['address'];
 if($name !='' && $email != '' && $password!=''){
 	
-	$sql = "INSERT INTO users(email,password,name) VALUES('$email','$password','$name')";
+	$sql = "INSERT INTO users(email,password,name, phone, address) VALUES('$email','$password','$name', '$phone', '$address')";
 	$result = $mysqli->query($sql);
 	if($result){
 		echo 'THANH_CONG';

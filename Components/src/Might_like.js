@@ -1,11 +1,15 @@
 
-import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet, Dimensions } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet, Dimensions, useColorScheme } from 'react-native'
+import React, { useContext } from 'react'
 import { Data } from './data';
 import { useNavigation } from '@react-navigation/native';
+import { MyContext } from './MyContext';
+import { RenderItem } from './Render';
 
-export default function Might_like() {
+export default function Might_like({Product}) {
 
+  const Auth= useContext(MyContext);
+  const {HomeData}= Auth;
   navigation= useNavigation();
   const ClickItem = (item) =>{
     navigation.navigate('Item', {ID: item.id})
@@ -16,28 +20,24 @@ export default function Might_like() {
         const randomIndex = Math.floor(Math.random() * array.length);
         return array[randomIndex];
       };
-    RCM_Data.push(getRandomItem(Data));
-    RCM_Data.push(getRandomItem(Data));
-
+    RCM_Data.push(getRandomItem(HomeData));
+    RCM_Data.push(getRandomItem(HomeData));
+   
+    
+      
   return (
-    <View>
+    <View style={{paddingLeft:25}}>
       <Text style={styles.Title}> you might also like:</Text>
+      
       <FlatList  
       horizontal
-                data={RCM_Data}
-                keyExtractor={item=> item.id}
+      data={RCM_Data}
+      keyExtractor={item=> item.id}
                 
-                renderItem={({item})=>
-                  
-                  
-                    <TouchableOpacity onPress={() =>ClickItem(item)}>
-                  <View style={styles.listItem}>
-                  <Image source={item.image[0]}  style={styles.pic}  ></Image>
-                  <Text  style={styles.name}>{item.name}</Text>
-                  
-               
-                </View>
-                  </TouchableOpacity>
+       renderItem={({item})=>
+                  <View style={{marginHorizontal:30}}>
+                <RenderItem item={item}   />
+                  </View> 
               
                  }
                 
@@ -57,36 +57,14 @@ const styles = StyleSheet.create({
 
          
        },
+       Title:{
+        color: '#9FF8EF',
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign: 'left',
+        textTransform:'uppercase'
+       },
      
     
-      name:{
-       fontSize:15,
-       width:150,
-       color:'white',
-       fontWeight:"800",
-       textAlign:'center',
-       textTransform:'uppercase'
-      },
-      price:{
       
-       fontSize:13,
-       width:150,
-       color:'white',
-       // fontWeight:"normal",
-       textAlign:'center',
-       textTransform:'uppercase'
-      },
-      pic:{
-       width: 200,
-       height:200,
-       alignItems:'center',},
-
-     Title:{
-         color: '#9FF8EF',
-         fontSize: 22,
-         fontWeight: 'bold',
-         textAlign: 'left',
-         marginLeft: 25,
-         textTransform:'uppercase'
-        },
 })

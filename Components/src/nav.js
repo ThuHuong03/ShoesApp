@@ -19,6 +19,7 @@ import ONE_STAR from '../Pages/ONE_STAR';
 import RUN_HIKE from '../Pages/RUN_HIKE';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Bag from '../Pages/Bag';
+import Profile from '../Pages/Profile';
 import {  MyContext } from './MyContext';
 import Main from './Main';
 import axios from 'axios';
@@ -33,15 +34,7 @@ const Stack= createNativeStackNavigator();
   
 
 
-  function Profile(){
-
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Profile Screen</Text>
-      </View>
-    );
-  }
-
+  
  
   function Oder(){
     return (
@@ -110,15 +103,15 @@ function MyDrawer() {
 
 const Nav= ()=> {
   const Auth = useContext(MyContext)
-  const {setHomeData, setType} = Auth
+  const {setHomeData, setType, setBagData} = Auth
 
   function conmponentDidMount() {
-    axios.get('http://192.168.1.4/API/')
+    axios.get(Auth.Localhost)
     .then((response) =>{
       // console.log(response.data)
       setHomeData(response.data.product);
       setType(response.data.type);
-
+      // setBagData(response.data.product);
     })
     .catch((error) => console.log(error))
 

@@ -1,20 +1,43 @@
 
-import { View, Text, SafeAreaView, StyleSheet, ImageBackground,Image, FlatList , Dimensions} from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, StyleSheet, ImageBackground,Image, FlatList , Dimensions, useColorScheme} from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import {Data} from '../src/data'
 import Menu_bar from '../src/Menu_bar'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { MyContext } from '../src/MyContext';
+import Get_Product_byType from '../API/Get_Product_byType';
+import axios from 'axios';
+import { RenderItem } from '../src/Render';
 
-
-export default function List({Title}) {
+export default function List({Type}) {
+  const Auth = useContext(MyContext);
   navigation= useNavigation();
-  const ClickItem = (item) =>{
-    navigation.navigate('Item', {ID: item.id})
-   
-  } 
-  const List_Data = Data.filter(data => data.title== Title);
+  const  [List_Data, SetList] =useState([]);
+  
+function conmponentDidMount() {
 
+
+  axios.get(`${Auth.Localhost}product_by_type.php?id_type=${Type.id}&page=1`)
+  .then((response) =>{
+      
+      SetList(response.data);
+      // console.log(response.data.length);
+
+  })
+  .catch((error) => console.log(error))
+
+  
+}
+
+useEffect(()=>{
+  
+
+conmponentDidMount();
+// console.log('lis',List_Data)
+// console.log(Type)
+
+},[]);
   return (
     <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.ImageBackground} source={require('../assets/background.png')}>
@@ -24,27 +47,24 @@ export default function List({Title}) {
            
             <View style={styles.scroll_screen}>
                 <View>
-                    <Text style={styles.Title}>{Title}</Text>
+                    <Text style={styles.Title}>{Type.name}</Text>
                </View>
                 <FlatList  
                 data={List_Data}
-                keyExtractor={item=> item.id}
+                keyExtractor={(item) => item.id.toString()}
                 numColumns={2}
                 renderItem={({item})=>
-                  
-                  
-                    <TouchableOpacity onPress={() =>ClickItem(item)}>
-                  <View style={styles.listItem}>
-                  <Image source={item.image[0]}  style={styles.pic}  ></Image>
-                  <Text  style={styles.name}>{item.name}</Text>
-                  <Text style={styles.price}>{item.price}</Text> 
-               
-                </View>
-                  </TouchableOpacity>
-              
-                 }
                 
-                />
+                <RenderItem item={item}   key= {item.id} />
+              
+                
+              }
+             
+              />
+               
+               
+              
+                 
 
 
                

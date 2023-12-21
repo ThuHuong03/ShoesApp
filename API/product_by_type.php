@@ -3,7 +3,7 @@
 	include('connect/connect.php');
 	$id_type = $_GET['id_type'];
 
-	$limit = 3;
+	$limit = 10;
 	$page = isset($_GET['page'])?$_GET['page']:1;
 	settype($page, "int");
 	$offset = ($page - 1) * $limit;

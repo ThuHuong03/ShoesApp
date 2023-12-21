@@ -5,10 +5,11 @@ import { useRoute } from '@react-navigation/native'
 
 export default function SeeAll() { 
   const route= useRoute();
-  const {Title}= route.params;
-  
+  const {Type}= route.params;
+  // console.log('See', Type);
     return (
-   <List Title={Title}/>
+   <List Type={Type}/>
+  
     
   )
 }

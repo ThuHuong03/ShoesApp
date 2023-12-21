@@ -9,10 +9,11 @@ import {
     FlatList,
     TouchableOpacity,
     Dimensions,
-    Modal
+    Modal,
+    Alert
   
   } from "react-native";
-  import React,{useRef, useEffect, useState} from "react";
+  import React,{useRef, useEffect, useState, useContext} from "react";
   import { Ionicons } from "@expo/vector-icons";
   import { Data } from "../src/data";
   import Menu_bar from "../src/Menu_bar";
@@ -20,28 +21,30 @@ import {
   import { ScrollView } from "react-native-gesture-handler";
   import Custom_btn from "../src/custom_btn";
   import Might_like from "../src/Might_like";
+import { MyContext } from "../src/MyContext";
   
 
   
   
   
   export default function Item() {
-    const width= Dimensions.get("window").width - 50;
+   
     const route = useRoute();
-    const [scrollViewRef, setScrollViewRef] = useState(null);
+    const Auth =useContext(MyContext);
+    const {BagData, setBagData, Localhost}= Auth;
     const {product} = route.params;
-    const url=`http://192.168.1.4/API/images/`;
+    
     let Images= product.images[0].split('|');
     Images= Images.map(str=> str.trim())
 
 
-    let interval;
+   
     const availableSizes= ['35','36','37','38','39','40','41','42','43','44','45'];
   
     const [Size, SetSize]= useState('--');
     const [Quantity, SetQuantity]= useState(0);
     const [isModalVisible,SetVisibility] = useState(false);
-  
+    const url =`${Localhost}images/`
     function ToggleModal(){
         SetVisibility(!isModalVisible);
         
@@ -58,13 +61,44 @@ import {
     }
   
     function TogglePlusQty(){
-      if(Quantity == 0) SetQuantity(1);
-      else SetQuantity(Quantity+1);
+      
+     SetQuantity(Quantity+1);
     }
-  
-    useEffect(()=>{
-      console.log(product)
-    },[])
+    
+    function ToggleAddToCart(){
+      if(Size == '--' && Quantity ==0) {
+        Alert.alert ("Notice","Please select a size and quantity")
+        return;
+      }
+      else if(Quantity == 0) {
+        Alert.alert ("Notice","Please select a quantity")
+        return;
+      }
+      else if(Size == '--') {
+        Alert.alert ("Notice","Please select a size")
+        return;
+      }
+      
+
+        
+        let NewBag= BagData;
+        const index = NewBag.findIndex(item => item.productID === product.id && item.size === Size);
+        if(index!= -1) 
+        {
+          NewBag[index].quantity += Quantity;
+        }
+        else 
+          NewBag.push({productID: product.id, size: Size, quantity: Quantity});
+        setBagData(NewBag);
+        // console.log(NewBag);
+        SetSize('--');
+        SetQuantity(0);
+    }
+
+    // useEffect(()=>{
+    //   console.log(product)
+    // },[])
+    
     return (
       <SafeAreaView style={styles.container}>
         <ImageBackground
@@ -121,6 +155,7 @@ import {
   
                   <Custom_btn
                   Title="Add to Cart"
+                  onPress={()=>{ToggleAddToCart()}}
                   />
                   <Custom_btn
                   Title="Buy Now"
@@ -136,7 +171,7 @@ import {
               </Text>
               <Text style={styles.content}>{product.description} </Text>
               {/* Đoạn code hiện thông tin của giày */}
-            <Might_like/>
+            {/* <Might_like product= {product}/> */}
  
   
   {/* Modal chọn size giày */}

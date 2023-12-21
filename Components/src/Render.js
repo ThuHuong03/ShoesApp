@@ -1,62 +1,256 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { MyContext } from "./MyContext";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
 
-export  function Render() {
+export function Render() {
   return (
     <View>
       <Text>Render</Text>
     </View>
-  )
+  );
 }
 
+export function RenderItem({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const url = `${Auth.Localhost}images/`;
+  let Images = item.images[0].split("|");
+  Images = Images.map((str) => str.trim());
 
-export function RenderItem({item, ToggleItem}) {
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+  return (
+    <View style={styles.Product}>
+      <TouchableOpacity onPress={() => ToggleItem(item)}>
+        <Image
+          style={styles.ProductImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <Text style={styles.name}> {item.name}</Text>
+        <Text style={styles.price}> {item.price} VND</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
-    const url=`http://192.168.1.4/API/images/`;
-    let Images= item.images[0].split('|');
-    Images= Images.map(str=> str.trim())
-    
-   
-    return (
+export function RenderBagItem({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const [Product, setProduct] = useState({ images: ["|"] });
+  const { BagData, setBagData, Localhost } = Auth;
+  const url = `${Auth.Localhost}images/`;
 
-      <View style={styles.Product} key={item.id}>
-        <TouchableOpacity onPress={() => ToggleItem(item)}>
-          <Image style={styles.ProductImg} source={{ uri: `${url}${Images[0]}`}}></Image>
-          <Text  style={styles.name}> {item.name}</Text>
-          <Text style={styles.price}> {item.price} VND</Text>
+  let Images = Product.images[0].split("|");
+  Images = Images.map((str) => str.trim());
 
-         
-        </TouchableOpacity>
-      </View>
-    );
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+  function ToggleDelete(item) {
+    const NewBag = BagData.filter((product) => product.id != item.id);
+    // console.log(NewBag.length);
+    setBagData(NewBag);
   }
 
-const styles = StyleSheet.create({
+  const addQuantity = () => {
+    let newCart = BagData.map((product) => {
+      
+      if (product.productID == item.productID && product.size == item.size)
+        product.quantity++;
+    
+    return product;
+  });
+    setBagData(newCart);
+  };
 
-Product: {
+  const reduceQuantity = () => {
+    let newCart = BagData.map((product) => {
+      
+        if (product.productID == item.productID && product.size == item.size)
+          product.quantity--;
+      
+      return product;
+    });
+    setBagData(newCart);
+  };
+
+  useEffect(() => {
+    const url = `${Localhost}product_detail.php?id=${item.productID}`;
+    axios
+      .get(url)
+      .then((response) => setProduct(response.data[0]))
+      .catch((err) => console.log(err, url));
+  });
+  return (
+    <TouchableOpacity onPress={() => ToggleItem(Product)}>
+      <View style={styles.listItem}>
+        <Image
+          style={styles.ProductImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2 - 40,
+          }}
+        >
+          <Text style={styles.B_name}> {Product.nameProduct}</Text>
+          <Text style={styles.B_price}> {Product.price} VND</Text>
+          <Text style={styles.item_color}>
+            {" "}
+            {Product.color} | {Product.material} | Size: {item.size}
+          </Text>
+          <View style={styles.btn}>
+            <TouchableOpacity onPress={reduceQuantity}>
+              <Ionicons name="remove-circle-outline" size={30} color={"white"} />
+            </TouchableOpacity>
+
+            <Text style={styles.B_price}> {item.quantity} </Text>
+            <TouchableOpacity onPress={addQuantity}>
+              <Ionicons name="add-circle-outline" size={30} color={"white"} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.btn}>
+            <TouchableOpacity>
+              <Ionicons name="heart-outline" size={30} color={"white"} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => ToggleDelete(item)}>
+              <Ionicons name="trash" size={30} color={"white"} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <Ionicons name="ellipse-outline" size={30} color={"white"} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.line} />
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+export function RenderSearchItem({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const url = `${Auth.Localhost}images/`;
+  let Images = item.images[0].split("|");
+  Images = Images.map((str) => str.trim());
+
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+  return (
+    <TouchableOpacity onPress={() => ToggleItem(item)}>
+    <View style={styles.listItem}>
+      <Image
+        style={styles.ProductImg}
+        source={{ uri: `${url}${Images[0]}` }}
+      ></Image>
+      <View
+        style={{
+          justifyContent: "space-around",
+          marginLeft: 25,
+          width: Dimensions.get("window").width / 2 - 40,
+        }}
+      >
+        <Text style={styles.B_name}> {item.name}</Text>
+        <Text style={styles.B_price}> {item.price} VND</Text>
+        <Text style={styles.item_color}>
+          {" "}
+          {item.color} | {item.material} 
+        </Text>
+        </View>
+        </View>
+        <View style={styles.line} />
+        
+      </TouchableOpacity>
+    
+  );
+}
+ 
+
+const styles = StyleSheet.create({
+  Product: {
     width: "50%",
     alignContent: "center",
     alignItems: "center",
   },
+  
+
   ProductImg: {
+    width: Dimensions.get("window").width / 2 - 40,
+    height: Dimensions.get("window").width / 2 - 40,
+  },
+  name: {
+    fontSize: 15,
+    width: Dimensions.get("window").width / 2 - 40,
+    color: "white",
+    fontWeight: "800",
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+  price: {
+    fontSize: 13,
+    width: Dimensions.get("window").width / 2 - 40,
+    color: "white",
+    // fontWeight:"normal",
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+  B_name: {
+    fontSize: 20,
+    // width:150,
+    color: "white",
+    fontWeight: "800",
+    textAlign: "right",
+    textTransform: "uppercase",
+  },
+  B_price: {
+    fontSize: 17,
+    // width:150,
+    color: "white",
+    // fontWeight:"normal",
+    textAlign: "right",
+    textTransform: "uppercase",
+  },
+
+  listItem: {
+    padding: 25,
+    flexDirection: "row",
+  },
+
+  pic: {
     width: 200,
     height: 200,
+    alignItems: "center",
   },
-  name:{
-    fontSize:15,
-    width:150,
-    color:'white',
-    fontWeight:"800",
-    textAlign:'center',
-    textTransform:'uppercase'
-   },
-   price:{
-   
-    fontSize:13,
-    width:150,
-    color:'white',
-    // fontWeight:"normal",
-    textAlign:'center',
-    textTransform:'uppercase'
-   },
-})
+
+  item_color: {
+    color: "#69A09E",
+    fontSize: 15,
+    fontWeight: "300",
+  },
+  btn: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  line: {
+    height: 2,
+    with: "100%",
+    backgroundColor: "white",
+  },
+});

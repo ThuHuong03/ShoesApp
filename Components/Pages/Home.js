@@ -16,21 +16,13 @@ export default function Home  () {
   const Auth= useContext(MyContext);
   const {HomeData, Type}= Auth;
   const ToggleSeeAll= (item)=>{
-    navigation.navigate('SeeAll',{Title: item.item.name})
+    navigation.navigate('SeeAll',{Type:item.type })
+    // console.log('See all', item);
    
   }
 
-  function ToggleItem(item) {
-    navigation.navigate("Item", { product: item });
-    console.log(item)
-  }
-  // useEffect(()=>{
-  //     console.log('Type',Type);
-  //     Type.map((Type)=>{
-  //       console.log(Type.name)
-  //     })
-      
-  // },[])
+  
+  
 
   return(
   <SafeAreaView 
@@ -60,11 +52,13 @@ export default function Home  () {
               numColumns={2}
               renderItem={({item})=>
                 
-                <RenderItem item={item}  ToggleItem={ToggleItem}  key= {item.id} />
+                <RenderItem item={item}    key={item.id}/>
               
               }
+              
             />
 
+          <TouchableOpacity onPress={ ()=>  ToggleSeeAll({type})   } ><Text style={styles.see_all}> See all</Text></TouchableOpacity>
             
             
           </View>
@@ -72,33 +66,7 @@ export default function Home  () {
         })
       }
 
-      {/* <FlatList style={styles.scroll_screen}
-        data={item_menu}
-        renderItem={ ({item}) => 
-          <View style={styles.item}>
-              <Text style={styles.Title}>{item.name}</Text>
-              <View style={{ flexDirection:'row', flex: 2, justifyContent:'space-between'}}>
-                
-                <View style={{ flexDirection:'column' , flex:1}}>
-                  <Image source={item.pic1}  style={styles.pic} ></Image>
-                  <Text style={styles.name}>{item.item1}</Text>
-                  <Text style={styles.price}>{item.price1}</Text> 
-               
-                </View>
-
-                <View style={{ flexDirection:'column', flex: 1}}>
-                  <Image source={item.pic2}  style={styles.pic}  ></Image>
-                  <Text  style={styles.name}>{item.item2}</Text>
-                  <Text style={styles.price}>{item.price2}</Text> 
-               
-                </View>
-               </View>
-
-               <TouchableOpacity onPress={ ()=>  ToggleSeeAll({item})  } ><Text style={styles.see_all}> See all</Text></TouchableOpacity>
-          </View>
-      }
-        keyExtractor={item => item.id}
-      />  */}
+    
     
       </View>
     </ImageBackground>
