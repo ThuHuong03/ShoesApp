@@ -7,7 +7,7 @@ import Home from '../Pages/Home';
 
 import User_white from '../assets/User_white.svg';
 import Favorite from '../assets/Favorite_fill.svg';
-import Order from '../assets/Order.svg';
+import Ordersvg from '../assets/Order.svg';
 import Bag_white from '../assets/Bag_white.svg';
 import Help_icon from '../assets/help.svg';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -20,9 +20,11 @@ import RUN_HIKE from '../Pages/RUN_HIKE';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Bag from '../Pages/Bag';
 import Profile from '../Pages/Profile';
+import Order from '../Pages/Order';
 import {  MyContext } from './MyContext';
 import Main from './Main';
 import axios from 'axios';
+import EditProfile from '../Pages/EditProfile';
 
 const Stack= createNativeStackNavigator();
 
@@ -33,16 +35,17 @@ const Stack= createNativeStackNavigator();
  
   
 
-
+function MyProfile(){
+  return(
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen component={Profile} name='Profile'/>
+      <Stack.Screen component={EditProfile} name='EditProfile'/>
+    </Stack.Navigator>
+  )
+}
   
  
-  function Oder(){
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Oder Screen</Text>
-      </View>
-    );
-  }
+
   function Favorites(){
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -82,16 +85,16 @@ function MyDrawer() {
       <Drawer.Screen name="CHUCK 70" component={CHUCK_70} />
       <Drawer.Screen name="ONE STAR" component={ONE_STAR} />
       <Drawer.Screen name="RUN HIKE" component={RUN_HIKE} />
-      <Drawer.Screen name="Profile" component={Profile} 
+      <Drawer.Screen name="MyProfile" component={MyProfile} 
       options={{
         drawerIcon: ()=> (<User_white  style={{ with: 30, height: 30}}/>),
-            
+        drawerLabel: 'Profile'
       }}
       />
       <Drawer.Screen name="Bag" component={Bag} 
       options={{drawerIcon: ()=> (<Bag_white  style={{ with: 30, height: 30}}/>)}}/>
-      <Drawer.Screen name="Oder" component={Oder} 
-      options={{drawerIcon: ()=> (<Order  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="Oder" component={Order} 
+      options={{drawerIcon: ()=> (<Ordersvg  style={{ with: 30, height: 30}}/>)}}/>
       <Drawer.Screen name="Favorites" component={Favorites} 
       options={{drawerIcon: ()=> (<Favorite  style={{ with: 30, height: 30}}/>)}}/>
       <Drawer.Screen name="Help" component={Help} 
@@ -105,7 +108,7 @@ const Nav= ()=> {
   const Auth = useContext(MyContext)
   const {setHomeData, setType, setBagData} = Auth
 
-  function conmponentDidMount() {
+  function GetHomeData() {
     axios.get(Auth.Localhost)
     .then((response) =>{
       // console.log(response.data)
@@ -121,7 +124,7 @@ const Nav= ()=> {
   useEffect(()=>{
     
 
-  conmponentDidMount();
+  GetHomeData();
 
 },[]);
 

@@ -28,6 +28,7 @@ try{
 			$id_sp = $value['id'];
 			$sanpham = $mysqli->query("select price from product where id=$id_sp");
 			$product = mysqli_fetch_assoc($sanpham);
+			$size= $value['size'];
 			$tongtien += $product['price'];
 		}
 		$todate = date('Y-m-d h:i:s');
@@ -39,7 +40,7 @@ try{
 			$product = $mysqli->query("Select * FROM product where id=$value[id]");
 			$product = mysqli_fetch_assoc($product);
 			$price = $product['price'];
-			$sql = "INSERT INTO bill_detail(id_bill,id_product, quantity, price) VALUES ($id_bill, $value[id], $value[quantity], $price)";
+			$sql = "INSERT INTO bill_detail(id_bill,id_product, quantity, price,size) VALUES ($id_bill, $value[id], $value[quantity], $price, $value[size])";
 			$mysqli->query($sql);
 			
 		}

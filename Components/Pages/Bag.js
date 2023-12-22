@@ -19,14 +19,27 @@ import Might_like from "../src/Might_like";
 import { useNavigation } from "@react-navigation/native";
 import { RenderBagItem } from "../src/Render";
 import { MyContext } from "../src/MyContext";
+import axios from "axios";
 
 export default function Bag() {
   const Auth= useContext(MyContext);
-  const {BagData}= Auth;
-
+  const {BagData,Localhost}= Auth;
+  
 
   navigation = useNavigation();
-
+  const Checkout =()=>{
+    axios.post(`${Localhost}cart.php`,
+    {
+      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjFAZ21haWwuY29tIiwiaWF0IjoxNzAzMjc1MDk5LCJleHBpcmUiOjE3MDM0NDc4OTl9.p_SLIxfy3GbKuvt0204SNsd1trK73dDTIXMgummVC8w",
+   
+       "arrayDetail": [
+           { "id": 2, "quantity": 1,"size":36 },
+           { "id": 3, "quantity": 1,"size": 38 }
+         ]
+       
+   }
+    )
+  }
   
   useEffect(()=>{
     console.log(Auth.BagData.length);
@@ -58,6 +71,7 @@ export default function Bag() {
               
             }
           />
+          <Custom_btn Title="Check out" onPress={Checkout}/>
         </View>
       </ImageBackground>
     </SafeAreaView>

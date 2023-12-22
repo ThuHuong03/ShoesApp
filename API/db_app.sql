@@ -39,8 +39,8 @@ CREATE TABLE `bill` (
 -- Dumping data for table `bill`
 --
 
-INSERT INTO `bill` (`id`, `id_customer`, `date_order`, `total`, `note`, `status`) VALUES
-(34, 7, '2017-04-15 07:14:16', 292, NULL, 0);
+-- INSERT INTO `bill` (`id`, `id_customer`, `date_order`, `total`, `note`, `status`) VALUES
+-- (34, 7, '2017-04-15 07:14:16', 292, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `bill_detail` (
   `id_bill` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `quantity` float DEFAULT '0',
-  `size` int (2) NOT NULL,
+  `size` text (100) NOT NULL,
   `price` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -61,9 +61,9 @@ CREATE TABLE `bill_detail` (
 -- Dumping data for table `bill_detail`
 --
 
-INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`, `price`) VALUES
-(13, 34, 33, 3, 157),
-(14, 34, 34, 3, 135);
+-- INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`, `price`, `size`) VALUES
+-- (13, 34, 33, 3, 157),
+-- (14, 34, 34, 3, 135);
 
 -- --------------------------------------------------------
 
@@ -214,6 +214,25 @@ INSERT INTO `users` (`id`, `email`, `password`, `name`, `phone`, `address`) VALU
 --
 -- Indexes for dumped tables
 --
+-- table structure for table `cart'
+CREATE TABLE `cart` (
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(100) NOT NULL,
+  `size` text(100) NOT NULL,
+  `checked` int(10) NOT NULL,
+  
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+
+--
+-- Dumping data for table `users`
+--
+INSERT INTO `cart` (`user_id`, `product_id`, `quantity`, `size`, `checked`) VALUES
+(13,1,1,'36', 0)
+
+
 
 --
 -- Indexes for table `bill`
@@ -256,6 +275,10 @@ ALTER TABLE `product_type`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `cart`
+--
 
 --
 -- AUTO_INCREMENT for dumped tables

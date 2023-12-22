@@ -53,7 +53,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("Profile");
+            navigation.navigate("MyProfile");
           }}
         >
           <User width={30} height={30}></User>

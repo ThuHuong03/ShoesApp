@@ -20,13 +20,14 @@ import { MyContext } from "../src/MyContext.js";
 import { RenderItem, RenderSearchItem } from "../src/Render.js";
 import Custom_btn from "../src/custom_btn.js";
 import Searchicon from "../assets/Search.svg";
+import LottieView from "lottie-react-native";
 
 export default function Search() {
   const navigation = useNavigation();
   const Auth = useContext(MyContext);
   const { Localhost} = Auth;
     const [Item, onChangeItem]= useState('');
-    const [SearchData, setSearchData] = useState([]);
+    const [SearchData, setSearchData] = useState(null);
   // console.log(User);
   const SearchItem=()=>{
     if(Item=='')
@@ -37,7 +38,14 @@ export default function Search() {
     const url= `${Localhost}search.php?key=${Item}`
     axios.get(url)
     .then(res=>{
-        setSearchData(res.data);
+      if( typeof res.data == "string") 
+      {
+         Alert.alert("Notice", "Can't find the search");
+         setSearchData(null);
+      }
+       
+       else setSearchData(res.data);
+      // console.log( typeof res.data);
     })
     .catch(err=>{console.log(err);});
   }
@@ -68,21 +76,30 @@ export default function Search() {
                    
 
             </View>
-
+         {(SearchData == null)? (
+            <LottieView
+            source={require('../assets/Find.json')}
+            autoPlay 
+            />
+            // <Text style={styles.inputText}> Nothing here</Text>
+         ):
+           
             <FlatList
             data={SearchData}
             keyExtractor={(item) => item.id}
             numColumns={1}
             renderItem={
               ({ item }) => (
-                  // console.log(item)
+                 
                 <RenderSearchItem item={item} />
-                // <Text> H</Text>
+               
                
               )
               
             }
           />
+        }
+        
             
         
          
@@ -135,9 +152,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
    alignItems:'center',
    alignContent: 'center',
-
+    padding: 25,
     // backgroundColor:'white',
-    //    margin: 25,
+      //  margin: 25,
   },
 
 });

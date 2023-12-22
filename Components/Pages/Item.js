@@ -82,17 +82,16 @@ import { MyContext } from "../src/MyContext";
 
         
         let NewBag= BagData;
-        const index = NewBag.findIndex(item => item.productID === product.id && item.size === Size);
+        const index = NewBag.findIndex(item => item.product_id === product.id && item.size === Size);
         if(index!= -1) 
         {
           NewBag[index].quantity += Quantity;
         }
         else 
-          NewBag.push({productID: product.id, size: Size, quantity: Quantity});
+          NewBag.push({product_id: product.id, size: Size, quantity: Quantity, checked: 0});
         setBagData(NewBag);
         // console.log(NewBag);
-        SetSize('--');
-        SetQuantity(0);
+        Alert.alert("Congratulations","You have successfully added product into your bag")
     }
 
     // useEffect(()=>{

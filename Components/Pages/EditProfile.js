@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   FlatList,
+  TextInput,
 } from "react-native";
 import { item_menu } from "../src/data.js";
 import Menu_bar from "../src/Menu_bar";
@@ -19,15 +20,28 @@ import { RenderItem } from "../src/Render.js";
 import Custom_btn from "../src/custom_btn.js";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function Profile() {
+export default function EditProfile() {
   const navigation = useNavigation();
+  
   const Auth = useContext(MyContext);
-  const { User, Logout } = Auth;
-
-  const ToggleEdit = ()=>{
-    navigation.navigate('EditProfile' )
+  const { User,setUser, Token, Localhost } = Auth;
+  const [ FullName, setFullName ] = useState(User.name)
+  const [Phone, setPhone]= useState(User.phone)
+  const [Address, setAddress] = useState(User.address)
+  const ChangeInfo = ()=>{
+    axios.post(`${Localhost}change_info.php`,
+    {
+      "token": Token,
+      "name": FullName,
+      "phone": Phone,
+      "address": Address
+    })
+    .then(response => {navigation.navigate('Profile');
+    setUser(response.data);
+  })
+    .catch(error =>console.log(error))
   }
-  console.log(User);
+  // console.log(User);
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -39,32 +53,47 @@ export default function Profile() {
           <Menu_bar />
         </View>
         <View style={styles.scroll_screen}>
-          <View style={{flexDirection:'row', justifyContent:"space-between"}}>
+          
             <Text style={styles.Title}> Hi {User.name} !</Text>
-            <TouchableOpacity onPress={ToggleEdit}>
-              <Ionicons name="create-outline" color="#9FF8EF" size={30} />
-            </TouchableOpacity>
-          </View>
+            
+         
           <View style={styles.item}>
             <Text style={styles.name}> Full name:</Text>
-            <Text style={styles.price}> {User.name}</Text>
+            <TextInput 
+            style={styles.inputText}
+            value={FullName} 
+            onChangeText={setFullName}
+            placeholder='Full Name'
+            placeholderTextColor='#69A09E'
+            />
           </View>
           <View style={styles.item}>
             <Text style={styles.name}> Email:</Text>
+
             <Text style={styles.price}> {User.email}</Text>
           </View>
           <View style={styles.item}>
             <Text style={styles.name}> Phone number:</Text>
-            <Text style={styles.price}> {User.phone}</Text>
+            <TextInput style={styles.inputText}
+            onChangeText={setPhone}
+            value={Phone}
+              placeholder='Phone Number'
+               placeholderTextColor='#69A09E'
+       ></TextInput>  
           </View>
           <View style={styles.item}>
             <Text style={styles.name}> Address: </Text>
-            <Text style={styles.price}> {User.address}</Text>
+            <TextInput style={styles.inputText}
+        onChangeText={setAddress}
+        value={Address}
+        placeholder='Address'
+         placeholderTextColor='#69A09E'
+       ></TextInput>
           </View>
           <View
             style={{ alignContent: "center", alignItems: "center", margin: 30 }}
           >
-            <Custom_btn Title="Log out" onPress={Logout} />
+            <Custom_btn Title="Save" onPress={ChangeInfo} />
           </View>
         </View>
       </ImageBackground>
@@ -114,6 +143,16 @@ const styles = StyleSheet.create({
     textAlign: "left",
     textTransform: "uppercase",
   },
+  inputText:{
+    width: 300,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#B5B5B5',
+    borderRadius: 5,
+    // margin: 10,
+    padding: 10,
+    color: '#9FF8EF'
+  },
   name: {
     fontSize: 15,
     width: 150,
@@ -124,7 +163,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 13,
-    
+    width: 150,
     color: "white",
     // fontWeight:"normal",
     textAlign: "left",

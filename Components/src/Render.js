@@ -58,7 +58,7 @@ export function RenderBagItem({ item }) {
     navigation.navigate("Item", { product: item });
   }
   function ToggleDelete(item) {
-    const NewBag = BagData.filter((product) => product.id != item.id);
+    const NewBag = BagData.filter((product) => product.product_id != item.product_id || product.size != item.size );
     // console.log(NewBag.length);
     setBagData(NewBag);
   }
@@ -66,7 +66,7 @@ export function RenderBagItem({ item }) {
   const addQuantity = () => {
     let newCart = BagData.map((product) => {
       
-      if (product.productID == item.productID && product.size == item.size)
+      if (product.product_id == item.product_id && product.size == item.size)
         product.quantity++;
     
     return product;
@@ -77,7 +77,7 @@ export function RenderBagItem({ item }) {
   const reduceQuantity = () => {
     let newCart = BagData.map((product) => {
       
-        if (product.productID == item.productID && product.size == item.size)
+        if (product.product_id == item.product_id && product.size == item.size)
           product.quantity--;
       
       return product;
@@ -86,7 +86,7 @@ export function RenderBagItem({ item }) {
   };
 
   useEffect(() => {
-    const url = `${Localhost}product_detail.php?id=${item.productID}`;
+    const url = `${Localhost}product_detail.php?id=${item.product_id}`;
     axios
       .get(url)
       .then((response) => setProduct(response.data[0]))
@@ -181,6 +181,53 @@ export function RenderSearchItem({ item }) {
     
   );
 }
+
+export function RenderOrders({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+  return (
+    <TouchableOpacity >
+    <View style={styles.listItem}>
+      
+      <View
+        style={{
+          justifyContent: "space-around",
+          marginLeft: 25,
+          width: Dimensions.get("window").width / 2 - 40,
+        }}
+      >
+        <View style={styles.item}>
+            <Text style={styles.order_t}> Date Order:</Text>
+            <Text style={styles.order_s}> {item.date_order}</Text>
+          </View>
+          <View style={styles.item}>
+            <Text style={styles.order_t}> Total:</Text>
+            <Text style={styles.order_s}> {item.total} VND</Text>
+          </View>
+          <View style={styles.item}>
+            <Text style={styles.order_t}> Status:</Text>
+            <Text style={styles.order_s}> {item.status?"On Shipping":"Done" }</Text>
+          </View>
+
+        {/* <Text style={styles.B_name}> {item.date_order}</Text>
+        <Text style={styles.B_price}> Total: {item.total} VND</Text>
+
+        <Text style={styles.item_color}>
+          
+          {item.status} 
+        </Text> */}
+        </View>
+        </View>
+        <View style={styles.line} />
+        
+      </TouchableOpacity>
+    
+  );
+}
  
 
 const styles = StyleSheet.create({
@@ -209,6 +256,23 @@ const styles = StyleSheet.create({
     color: "white",
     // fontWeight:"normal",
     textAlign: "center",
+    textTransform: "uppercase",
+  },
+  order_t: {
+    fontSize: 13,
+    width: Dimensions.get("window").width / 2 - 40,
+    color: "white",
+   
+    textAlign: "left",
+    textTransform: "uppercase",
+  },
+  order_s: {
+    fontSize: 15,
+    width: Dimensions.get("window").width / 2 - 40,
+    color: "white",
+     fontWeight: "800",
+    // fontWeight:"normal",
+    textAlign: "right",
     textTransform: "uppercase",
   },
   B_name: {
@@ -252,5 +316,11 @@ const styles = StyleSheet.create({
     height: 2,
     with: "100%",
     backgroundColor: "white",
+  },
+  item: {
+    flexDirection: "row",
+    marginTop:30
+    // backgroundColor:'white',
+    //    margin: 25,
   },
 });
