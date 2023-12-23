@@ -132,8 +132,8 @@ const Nav= ()=> {
 
     
   return (
-    <NavigationContainer >
-      { !Auth.Auth?(
+    
+       !Auth.Auth?(
     <Stack.Navigator initialRouteName='List'
     screenOptions={
       {headerShown: false}
@@ -148,9 +148,9 @@ const Nav= ()=> {
     (
         <MyDrawer/>
     )
-      }
       
-    </NavigationContainer>
+      
+    
     
 
     

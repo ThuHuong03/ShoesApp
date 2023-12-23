@@ -1,22 +1,37 @@
 import 'react-native-gesture-handler';
 import Nav from './Components/src/nav';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
 import { AuthProvider } from './Components/src/MyContext';
-import Cart from './Components/Pages/Bag';
+
+import React, { useCallback, useEffect, useState } from 'react';
+
+import * as SplashScreen from 'expo-splash-screen';
+import Spalsh from './Components/Pages/Spalsh';
+const Stack= createNativeStackNavigator();
 
 
 
-const App= ()=> {
+
+export default function App() {
+
+
   return (
     <AuthProvider>
-        <Nav/>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name ='Splash' component={Spalsh} />
+          <Stack.Screen name= 'MainScreen' component={Nav} />
+        </Stack.Navigator>
+      </NavigationContainer>
+       
    </AuthProvider>
+  
 
   );
 }
 
 
 
-export default App;

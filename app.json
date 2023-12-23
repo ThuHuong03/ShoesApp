@@ -4,11 +4,11 @@
     "slug": "ShoesApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./Components/assets/icon.png",
+    "icon": "./Components/assets/icon.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./Components/assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./Components/assets/Splash_expo.jpg",
+     
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./Components/assets/adaptive-icon.png",
+        "foregroundImage": "./Components/assets/icon.jpg",
         "backgroundColor": "#ffffff"
       }
     },
