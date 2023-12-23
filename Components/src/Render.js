@@ -58,28 +58,29 @@ export function RenderBagItem({ item }) {
     navigation.navigate("Item", { product: item });
   }
   function ToggleDelete(item) {
-    const NewBag = BagData.filter((product) => product.product_id != item.product_id || product.size != item.size );
-    // console.log(NewBag.length);
+    const NewBag = BagData.filter(
+      (product) =>
+        product.product_id != item.product_id || product.size != item.size
+    );
+    console.log(NewBag.length);
     setBagData(NewBag);
   }
 
   const addQuantity = () => {
     let newCart = BagData.map((product) => {
-      
       if (product.product_id == item.product_id && product.size == item.size)
         product.quantity++;
-    
-    return product;
-  });
+
+      return product;
+    });
     setBagData(newCart);
   };
 
   const reduceQuantity = () => {
     let newCart = BagData.map((product) => {
-      
-        if (product.product_id == item.product_id && product.size == item.size)
-          product.quantity--;
-      
+      if (product.product_id == item.product_id && product.size == item.size)
+        product.quantity--;
+
       return product;
     });
     setBagData(newCart);
@@ -114,7 +115,11 @@ export function RenderBagItem({ item }) {
           </Text>
           <View style={styles.btn}>
             <TouchableOpacity onPress={reduceQuantity}>
-              <Ionicons name="remove-circle-outline" size={30} color={"white"} />
+              <Ionicons
+                name="remove-circle-outline"
+                size={30}
+                color={"white"}
+              />
             </TouchableOpacity>
 
             <Text style={styles.B_price}> {item.quantity} </Text>
@@ -124,21 +129,17 @@ export function RenderBagItem({ item }) {
           </View>
 
           <View style={styles.btn}>
-            <TouchableOpacity>
-              <Ionicons name="heart-outline" size={30} color={"white"} />
-            </TouchableOpacity>
-
             <TouchableOpacity onPress={() => ToggleDelete(item)}>
               <Ionicons name="trash" size={30} color={"white"} />
             </TouchableOpacity>
-
             <TouchableOpacity>
-              <Ionicons name="ellipse-outline" size={30} color={"white"} />
+              <Ionicons name="heart-outline" size={30} color={"white"} />
             </TouchableOpacity>
           </View>
         </View>
+        </View>
         <View style={styles.line} />
-      </View>
+      
     </TouchableOpacity>
   );
 }
@@ -155,52 +156,49 @@ export function RenderSearchItem({ item }) {
   }
   return (
     <TouchableOpacity onPress={() => ToggleItem(item)}>
-    <View style={styles.listItem}>
-      <Image
-        style={styles.ProductImg}
-        source={{ uri: `${url}${Images[0]}` }}
-      ></Image>
-      <View
-        style={{
-          justifyContent: "space-around",
-          marginLeft: 25,
-          width: Dimensions.get("window").width / 2 - 40,
-        }}
-      >
-        <Text style={styles.B_name}> {item.name}</Text>
-        <Text style={styles.B_price}> {item.price} VND</Text>
-        <Text style={styles.item_color}>
-          {" "}
-          {item.color} | {item.material} 
-        </Text>
+      <View style={styles.listItem}>
+        <Image
+          style={styles.ProductImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2 - 40,
+          }}
+        >
+          <Text style={styles.B_name}> {item.name}</Text>
+          <Text style={styles.B_price}> {item.price} VND</Text>
+          <Text style={styles.item_color}>
+            {" "}
+            {item.color} | {item.material}
+          </Text>
         </View>
-        </View>
-        <View style={styles.line} />
-        
-      </TouchableOpacity>
-    
+      </View>
+      <View style={styles.line} />
+    </TouchableOpacity>
   );
 }
 
 export function RenderOrders({ item }) {
   navigation = useNavigation();
   const Auth = useContext(MyContext);
-  
+
   function ToggleItem(item) {
     navigation.navigate("Item", { product: item });
   }
   return (
-    <TouchableOpacity >
-    <View style={styles.listItem}>
-      
-      <View
-        style={{
-          justifyContent: "space-around",
-          marginLeft: 25,
-          width: Dimensions.get("window").width / 2 - 40,
-        }}
-      >
-        <View style={styles.item}>
+    <TouchableOpacity>
+      <View style={styles.listItem}>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2 - 40,
+          }}
+        >
+          <View style={styles.item}>
             <Text style={styles.order_t}> Date Order:</Text>
             <Text style={styles.order_s}> {item.date_order}</Text>
           </View>
@@ -210,10 +208,13 @@ export function RenderOrders({ item }) {
           </View>
           <View style={styles.item}>
             <Text style={styles.order_t}> Status:</Text>
-            <Text style={styles.order_s}> {item.status?"On Shipping":"Done" }</Text>
+            <Text style={styles.order_s}>
+              {" "}
+              {item.status ? "On Shipping" : "Done"}
+            </Text>
           </View>
 
-        {/* <Text style={styles.B_name}> {item.date_order}</Text>
+          {/* <Text style={styles.B_name}> {item.date_order}</Text>
         <Text style={styles.B_price}> Total: {item.total} VND</Text>
 
         <Text style={styles.item_color}>
@@ -221,14 +222,11 @@ export function RenderOrders({ item }) {
           {item.status} 
         </Text> */}
         </View>
-        </View>
-        <View style={styles.line} />
-        
-      </TouchableOpacity>
-    
+      </View>
+      <View style={styles.line} />
+    </TouchableOpacity>
   );
 }
- 
 
 const styles = StyleSheet.create({
   Product: {
@@ -236,7 +234,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
   },
-  
 
   ProductImg: {
     width: Dimensions.get("window").width / 2 - 40,
@@ -244,7 +241,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    width: Dimensions.get("window").width / 2 - 40,
+    width: Dimensions.get("window").width / 2 ,
     color: "white",
     fontWeight: "800",
     textAlign: "center",
@@ -262,7 +259,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     width: Dimensions.get("window").width / 2 - 40,
     color: "white",
-   
+
     textAlign: "left",
     textTransform: "uppercase",
   },
@@ -270,7 +267,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width: Dimensions.get("window").width / 2 - 40,
     color: "white",
-     fontWeight: "800",
+    fontWeight: "800",
     // fontWeight:"normal",
     textAlign: "right",
     textTransform: "uppercase",
@@ -319,7 +316,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
-    marginTop:30
+    marginTop: 30,
     // backgroundColor:'white',
     //    margin: 25,
   },

@@ -24,13 +24,13 @@ import axios from "axios";
 export default function Bag() {
   const Auth= useContext(MyContext);
   const {BagData,Localhost}= Auth;
-  
-
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [Product, setProduct]= useState({})
   navigation = useNavigation();
   const Checkout =()=>{
     axios.post(`${Localhost}cart.php`,
     {
-      "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjFAZ21haWwuY29tIiwiaWF0IjoxNzAzMjc1MDk5LCJleHBpcmUiOjE3MDM0NDc4OTl9.p_SLIxfy3GbKuvt0204SNsd1trK73dDTIXMgummVC8w",
+      "token":Token,
    
        "arrayDetail": [
            { "id": 2, "quantity": 1,"size":36 },
@@ -40,10 +40,28 @@ export default function Bag() {
    }
     )
   }
+  function handleCalculateTotalPrice() {
+    let calculatePrice = 0;
+    
+      BagData.map((product) => {
+        
+        const url = `${Localhost}product_detail.php?id=${product.product_id}`;
+       axios
+      .get(url)
+      .then((response) => setProduct(response.data[0]))
+      .catch((err) => console.log(err, url));
+        
+        calculatePrice += Product.price * product.quantity;
+      });
+   
+    setTotalPrice(calculatePrice);
+  }
   
   useEffect(()=>{
     console.log(Auth.BagData.length);
-  },[])
+    handleCalculateTotalPrice();
+    console.log(totalPrice);
+  },[BagData])
 
   // console.log(BagData)
   return (
@@ -71,7 +89,12 @@ export default function Bag() {
               
             }
           />
-          <Custom_btn Title="Check out" onPress={Checkout}/>
+          <View style={styles.Checkout}>
+           
+            <Text style={styles.price}> {totalPrice} VND</Text>
+             <Custom_btn Title="Check out" onPress={Checkout}/>
+          </View>
+          
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -100,5 +123,20 @@ const styles = StyleSheet.create({
     height: "90%",
     width: "100%",
   },
+  price: {
+    fontSize: 25,
+    
+    color: "white",
+    fontWeight: "800",
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+  Checkout:{
+    flexDirection:'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    padding:25,
+  }
 
 });
