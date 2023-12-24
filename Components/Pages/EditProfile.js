@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
+  Alert,
 } from "react-native";
 import { item_menu } from "../src/data.js";
 import Menu_bar from "../src/Menu_bar";
@@ -29,6 +30,11 @@ export default function EditProfile() {
   const [Phone, setPhone]= useState(User.phone)
   const [Address, setAddress] = useState(User.address)
   const ChangeInfo = ()=>{
+    if(Phone  == ''||FullName == ''||Address =='')
+    {
+        Alert.alert("Notice", "Please fill your information throughly...");
+        return;
+    }
     axios.post(`${Localhost}change_info.php`,
     {
       "token": Token,
@@ -36,7 +42,9 @@ export default function EditProfile() {
       "phone": Phone,
       "address": Address
     })
-    .then(response => {navigation.navigate('Profile');
+    .then(response => {
+      Alert.alert("Congratulations", "Your information has been updated")
+      navigation.navigate('Profile');
     setUser(response.data);
   })
     .catch(error =>console.log(error))

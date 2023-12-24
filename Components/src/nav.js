@@ -25,6 +25,7 @@ import {  MyContext } from './MyContext';
 import Main from './Main';
 import axios from 'axios';
 import EditProfile from '../Pages/EditProfile';
+import CheckOut from '../Pages/CheckOut';
 
 const Stack= createNativeStackNavigator();
 
@@ -42,6 +43,15 @@ function MyProfile(){
       <Stack.Screen component={EditProfile} name='EditProfile'/>
     </Stack.Navigator>
   )
+}
+function MyBag (){
+return(
+  <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Screen component={Bag} name='Bag' />
+    <Stack.Screen component={CheckOut} name='CheckOut'/>
+  </Stack.Navigator>
+)
+  
 }
   
  
@@ -91,8 +101,11 @@ function MyDrawer() {
         drawerLabel: 'Profile'
       }}
       />
-      <Drawer.Screen name="Bag" component={Bag} 
-      options={{drawerIcon: ()=> (<Bag_white  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="MyBag" component={MyBag} 
+      options={{
+        drawerIcon: ()=> (<Bag_white  style={{ with: 30, height: 30}}/>),
+        drawerLabel:"Bag"
+        }}/>
       <Drawer.Screen name="Oder" component={Order} 
       options={{drawerIcon: ()=> (<Ordersvg  style={{ with: 30, height: 30}}/>)}}/>
       <Drawer.Screen name="Favorites" component={Favorites} 

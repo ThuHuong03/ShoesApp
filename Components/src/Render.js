@@ -227,7 +227,54 @@ export function RenderOrders({ item }) {
     </TouchableOpacity>
   );
 }
+export function RenderBillDetail({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const [Product, setProduct] = useState({ images: ["|"] });
+  const { BagData, setBagData, Localhost } = Auth;
+  const url = `${Auth.Localhost}images/`;
 
+  let Images = Product.images[0].split("|");
+  Images = Images.map((str) => str.trim());
+
+ 
+
+  useEffect(() => {
+    const url = `${Localhost}product_detail.php?id=${item.product_id}`;
+    axios
+      .get(url)
+      .then((response) => setProduct(response.data[0]))
+      .catch((err) => console.log(err, url));
+  });
+  return (
+   
+      <View style={styles.listItem}>
+        <Image
+          style={styles.BillImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2  +30,
+          }}
+        >
+          <Text style={styles.B_name}> {Product.nameProduct}</Text>
+          <Text style={styles.B_price}> {Product.price} VND</Text>
+          <Text style={styles.item_color}>
+            {" "}
+            {Product.color} | {Product.material} | Size: {item.size} | Quantity :{item.quantity}
+          </Text>
+          
+        </View>
+           <View style={styles.line} />
+        </View>
+     
+      
+   
+  );
+}
 const styles = StyleSheet.create({
   Product: {
     width: "50%",
@@ -238,6 +285,11 @@ const styles = StyleSheet.create({
   ProductImg: {
     width: Dimensions.get("window").width / 2 - 40,
     height: Dimensions.get("window").width / 2 - 40,
+  },
+  BillImg:
+  {
+    width: Dimensions.get("window").width / 2 - 100,
+    height: Dimensions.get("window").width / 2 - 100,
   },
   name: {
     fontSize: 15,

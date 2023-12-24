@@ -45,7 +45,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("Bag");
+            navigation.navigate("MyBag");
           }}
         >
           <Bag width={30} height={30}></Bag>

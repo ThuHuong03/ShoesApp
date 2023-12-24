@@ -28,17 +28,19 @@ export default function Bag() {
   const [Product, setProduct]= useState({})
   navigation = useNavigation();
   const Checkout =()=>{
-    axios.post(`${Localhost}cart.php`,
-    {
-      "token":Token,
+  //   axios.post(`${Localhost}cart.php`,
+  //   {
+  //     "token":Token,
    
-       "arrayDetail": [
-           { "id": 2, "quantity": 1,"size":36 },
-           { "id": 3, "quantity": 1,"size": 38 }
-         ]
+  //      "arrayDetail": [
+  //          { "id": 2, "quantity": 1,"size":36 },
+  //          { "id": 3, "quantity": 1,"size":38 }
+  //        ]
        
-   }
-    )
+  //  }
+    // )
+    navigation.navigate('CheckOut', {Total: totalPrice})
+
   }
   function handleCalculateTotalPrice() {
     let calculatePrice = 0;

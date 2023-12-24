@@ -6,9 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
 import { AuthProvider } from './Components/src/MyContext';
 
-import React, { useCallback, useEffect, useState } from 'react';
-
-import * as SplashScreen from 'expo-splash-screen';
+import React from 'react';
 import Spalsh from './Components/Pages/Spalsh';
 const Stack= createNativeStackNavigator();
 
