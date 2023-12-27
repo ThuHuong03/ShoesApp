@@ -22,17 +22,51 @@ import { MyContext } from "../src/MyContext";
 import Get_Product_byType from "../API/Get_Product_byType";
 import axios from "axios";
 import { RenderBillDetail, RenderItem } from "../src/Render";
+import { Ionicons } from "@expo/vector-icons";
+import Custom_btn from "../src/custom_btn";
+import Delete_All_Cart from "../API/Delete_All_Cart";
 
-export default function List({ Type }) {
+
+export default function CheckOut({ Type }) {
   const Auth = useContext(MyContext);
-  const { User, setUser, Localhost, Token, BagData } = Auth;
+  const { User, setUser, Localhost, Token, BagData, setBagData } = Auth;
   navigation = useNavigation();
   const [FullName, setFullName] = useState(User.name);
   const [Phone, setPhone] = useState(User.phone);
   const [Address, setAddress] = useState(User.address);
   const [isModalVisible, setModalVisible] = useState(false);
+  
     const Route= useRoute();
-    const {Total}= Route.params
+    const {Total}= Route.params;
+    
+   const Checkout = ()=>{
+
+    Alert.alert("Congratulations", "You have successfully checked out");
+    // console.log(BagData);
+    const arrayDetail= BagData.map(({product_id, user_id, checked, ...rest})=> ({id: product_id, ...rest}))
+    console.log(arrayDetail);
+      axios.post(`${Localhost}cart.php`,
+    {
+      "token":Token,
+   
+       "arrayDetail": arrayDetail
+         
+         
+       
+     }
+
+    )
+    .then(()=>{
+      Delete_All_Cart(Auth);
+    })
+    
+    navigation.navigate('Bag');
+
+   } 
+   const CheckOutMomo = ()=>{
+    navigation.navigate('CheckOutMomo');
+   }
+   
   const ChangeInfo = () => {
     if (Phone == "" || FullName == "" || Address == "") {
       Alert.alert("Notice", "Please fill your information throughly...");
@@ -51,7 +85,7 @@ export default function List({ Type }) {
       })
       .catch((error) => console.log(error));
   };
-
+  
   // function conmponentDidMount() {
   //   axios
   //     .get(`${Auth.Localhost}product_by_type.php?id_type=${Type.id}&page=1`)
@@ -176,6 +210,7 @@ export default function List({ Type }) {
                     color={"#39A7FF"}
                   />
                 </View>
+                
               </View>
             </View>
           </Modal>
@@ -196,7 +231,14 @@ export default function List({ Type }) {
               
             }
           />
-          <Text style={styles.title}> {Total} VND</Text>
+          <Text style={styles.title}> Total: {Total} VND</Text>
+
+          <Text style={styles.title}> Payment Method:</Text>
+                <View style={styles.pick_box}>
+                    <Custom_btn Title="COD" onPress={Checkout}/>
+               <Custom_btn Title="MOMO" onPress={CheckOutMomo}/>
+                </View>
+               
           
         </View>
       </ImageBackground>
@@ -310,5 +352,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
     padding:10
+  },
+  pick_box:{
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    
+    // width: Dimensions.get("window").width/2 - 50,
+    padding: 25,
   },
 });

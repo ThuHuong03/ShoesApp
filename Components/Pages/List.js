@@ -57,7 +57,7 @@ export default function List({ Type }) {
             data={List_Data}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
-            renderItem={({ item }) => <RenderItem item={item} key={item.id} />}
+            renderItem={({ item }) => <RenderItem item={item}  />}
           />
         </View>
       </ImageBackground>

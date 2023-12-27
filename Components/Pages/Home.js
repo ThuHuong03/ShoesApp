@@ -48,11 +48,11 @@ export default function Home  () {
           <FlatList
               // data={productsContext.Products.filter((item) => item.rating.rate >= 4)}
               data={HomeData.filter((item) => item.idType == type.id)}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item, index) => item.id.toString()}
               numColumns={2}
               renderItem={({item})=>
                 
-                <RenderItem item={item}    key={item.id}/>
+                <RenderItem item={item}    />
               
               }
               

@@ -26,6 +26,8 @@ import Main from './Main';
 import axios from 'axios';
 import EditProfile from '../Pages/EditProfile';
 import CheckOut from '../Pages/CheckOut';
+import CheckOutMomo from '../Pages/CheckOutMomo';
+import Item from '../Pages/Item';
 
 const Stack= createNativeStackNavigator();
 
@@ -46,9 +48,11 @@ function MyProfile(){
 }
 function MyBag (){
 return(
-  <Stack.Navigator screenOptions={{headerShown: false}}>
+  <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Bag'>
     <Stack.Screen component={Bag} name='Bag' />
     <Stack.Screen component={CheckOut} name='CheckOut'/>
+    <Stack.Screen component={CheckOutMomo} name='CheckOutMomo'/>
+    
   </Stack.Navigator>
 )
   

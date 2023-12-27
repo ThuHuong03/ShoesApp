@@ -22,6 +22,7 @@ import {
   import Custom_btn from "../src/custom_btn";
   import Might_like from "../src/Might_like";
 import { MyContext } from "../src/MyContext";
+import Add_Cart from "../API/Add_Cart";
   
 
   
@@ -89,9 +90,10 @@ import { MyContext } from "../src/MyContext";
         }
         else 
           NewBag.push({product_id: product.id, size: Size, quantity: Quantity, checked: 0});
-        setBagData(NewBag);
-        // console.log(NewBag);
-        Alert.alert("Congratulations","You have successfully added product into your bag")
+        Add_Cart(Auth, product.id, Size, Quantity)
+        // setBagData(NewBag);
+        
+        // Alert.alert("Congratulations","You have successfully added product into your bag")
     }
 
     // useEffect(()=>{

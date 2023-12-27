@@ -232,14 +232,30 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`user_id`, `product_id`, `quantity`, `size`, `checked`) VALUES
 (13,1,1,'36', 0)
 
+--
+---- create tbale favor
+--
 
-
+CREATE TABLE `favor` (
+  `id` int(11) NOT NULL ,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL
+  
+) 
 --
 -- Indexes for table `bill`
 --
 ALTER TABLE `bill`
   ADD PRIMARY KEY (`id`),
   ADD KEY `f1` (`id_customer`);
+
+--
+-- Indexes for table `favor`
+--
+ALTER TABLE `favor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `f1` (`user_id`),
+  ADD KEY `f2` (`product_id`);
 
 --
 -- Indexes for table `bill_detail`
@@ -289,6 +305,11 @@ ALTER TABLE `users`
 --
 ALTER TABLE `bill`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+--
+-- AUTO_INCREMENT for table `favor`
+--
+ALTER TABLE `favor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `bill_detail`
 --

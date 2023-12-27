@@ -9,20 +9,25 @@ function AuthProvider({ children }) {
   const [Type, setType] = useState([]);
   const [HomeData, setHomeData] = useState([]);
   const [BagData, setBagData] = useState([]);
+  const [FavoriteData, setFavoriteData] = useState([]);
   const [User, setUser] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
   const Signin = (data) => {
-    const url = `${Localhost}get_cart.php?user_id=${data.user.id}`;
+    const url = `${Localhost}get_favor.php?user_id=${data.user.id}`;
     axios
       .get(url)
-      .then((response) => setBagData(response.data))
+      .then((response) => {
+        if(typeof(response.data)=="string")
+          setFavoriteData([]);
+        else 
+          setFavoriteData(response.data)})
       .catch((error) => console.log(error));
 
     setUser(data.user);
     // console.log(user);
     setToken(data.token);
     setAuth(true);
-  };
-  const Localhost = "http://192.168.1.4/API/";
+  };  const Localhost = "http://192.168.1.4/API/";
   const [Token, setToken] = useState("");
   const Logout = () => {
     setUser({});
@@ -42,7 +47,9 @@ function AuthProvider({ children }) {
     User,
     setUser,
     Logout,
-    Token
+    Token,
+    FavoriteData, setFavoriteData,
+    totalPrice, setTotalPrice
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

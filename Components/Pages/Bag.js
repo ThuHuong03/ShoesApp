@@ -12,7 +12,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Bag_Data } from "../src/data";
 import Menu_bar from "../src/Menu_bar";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import Custom_btn from "../src/custom_btn";
 import Might_like from "../src/Might_like";
@@ -20,52 +20,43 @@ import { useNavigation } from "@react-navigation/native";
 import { RenderBagItem } from "../src/Render";
 import { MyContext } from "../src/MyContext";
 import axios from "axios";
+import LottieView from "lottie-react-native";
+import Get_Cart from "../API/Get_Cart";
 
 export default function Bag() {
   const Auth= useContext(MyContext);
-  const {BagData,Localhost}= Auth;
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [Product, setProduct]= useState({})
+  const {Localhost, User, BagData, setBagData, totalPrice}= Auth;
+
+
   navigation = useNavigation();
+
   const Checkout =()=>{
-  //   axios.post(`${Localhost}cart.php`,
-  //   {
-  //     "token":Token,
-   
-  //      "arrayDetail": [
-  //          { "id": 2, "quantity": 1,"size":36 },
-  //          { "id": 3, "quantity": 1,"size":38 }
-  //        ]
-       
-  //  }
-    // )
-    navigation.navigate('CheckOut', {Total: totalPrice})
+  navigation.navigate('CheckOut', {Total: totalPrice});
 
   }
-  function handleCalculateTotalPrice() {
-    let calculatePrice = 0;
-    
-      BagData.map((product) => {
-        
-        const url = `${Localhost}product_detail.php?id=${product.product_id}`;
-       axios
-      .get(url)
-      .then((response) => setProduct(response.data[0]))
-      .catch((err) => console.log(err, url));
-        
-        calculatePrice += Product.price * product.quantity;
-      });
-   
-    setTotalPrice(calculatePrice);
-  }
+
   
-  useEffect(()=>{
-    console.log(Auth.BagData.length);
-    handleCalculateTotalPrice();
-    console.log(totalPrice);
-  },[BagData])
+  const ToggleShopping= ()=>{
+    navigation.navigate('Home');
+    // console.log("Shopping")
+  }
+  useFocusEffect(()=>{
 
-  // console.log(BagData)
+    
+  })
+  useEffect(()=>{
+ 
+  navigation.addListener('focus', ()=>{
+      Get_Cart(Auth);
+
+    console.log("CalculateTotalPrice");
+  })
+   
+  
+   })
+ 
+
+  
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -75,11 +66,26 @@ export default function Bag() {
         <View style={styles.Menubar}>
           <Menu_bar />
         </View>
+         <View style={styles.scroll_screen}>
+      {(BagData.length==0) ? (
+        <View style={styles.container}>
+          <LottieView
+            source={require('../assets/Find.json')}
+            autoPlay 
+            />
+            <TouchableOpacity onPress={ToggleShopping}>
+              <Text style={styles.Title}>There is nothing in your Bag! Let's Shopping</Text>
+            </TouchableOpacity>
+        
+            </View>
+      ):
+      (
+        <View>
 
-        <View style={styles.scroll_screen}>
-          <FlatList
+         <FlatList
             data={BagData}
-            keyExtractor={(item) => item.id}
+            style={{height:'90%'}}
+            keyExtractor={(item, index) => index}
             numColumns={1}
             renderItem={
               ({ item }) => (
@@ -90,13 +96,16 @@ export default function Bag() {
               )
               
             }
-          />
+          /> 
+         
           <View style={styles.Checkout}>
            
             <Text style={styles.price}> {totalPrice} VND</Text>
              <Custom_btn Title="Check out" onPress={Checkout}/>
-          </View>
-          
+         </View>
+         </View>
+      )}
+           
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -139,6 +148,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     padding:25,
-  }
+  },
+  Title:{
+    fontSize:30,
+    textAlign: 'center',
+    //padding:50,
+    color: '#9FF8EF',
+    fontWeight: 'bold',
+
+}
 
 });

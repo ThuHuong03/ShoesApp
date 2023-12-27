@@ -11,13 +11,60 @@ import { MyContext } from "./MyContext";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import Edit_Cart from "../API/Edit_Cart";
+import Get_Cart from "../API/Get_Cart";
+import Delete_Cart from "../API/Delete_Cart";
 
-export function Render() {
+
+const AddFavor =(item, Auth) =>{
+  const url= `${Auth.Localhost}add_favor.php`
+  axios.post(url,
+    {
+      user_id: Auth.User.id,
+      product_id: item.product_id
+    })
+    axios.get(`${Auth.Localhost}get_favor.php`)
+    .then((response )=> Auth.setFavoriteData(response.data))
+    .catch((error)=> console.log(error))
+}
+
+const DeleteFavor =(item, Auth) =>{
+  const url= `${Auth.Localhost}delete_favor.php`
+  axios.post(url,
+    {
+      user_id: Auth.User.id,
+      product_id: item.product_id
+    })
+    axios.get(`${Auth.Localhost}get_favor.php`)
+    .then((response )=> Auth.setFavoriteData(response.data))
+    .catch((error)=> console.log(error))
+}
+
+
+const InFavor =({item, Auth}) =>{
+ if(Auth.FavoriteData == undefined)
+ return(
+<TouchableOpacity onPress={()=>AddFavor(item, Auth)}>
+    <Ionicons name="heart-outline" size={30} color={"white"} />
+  </TouchableOpacity>
+)
+//  const Find= Auth.FavoriteData.find((product) => product.product_id ==item.product_id);
+const Find= true;
+
+  if(Find== true)
   return (
-    <View>
-      <Text>Render</Text>
-    </View>
-  );
+  <TouchableOpacity onPress={()=>AddFavor(item, Auth)}>
+    <Ionicons name="heart-outline" size={30} color={"white"} />
+  </TouchableOpacity>
+  
+  
+)
+else return (
+  <TouchableOpacity onPress={() =>DeleteFavor (item, Auth)}>
+    <Ionicons name="heart" size={30} color={"white"} />
+  </TouchableOpacity>
+  
+)
 }
 
 export function RenderItem({ item }) {
@@ -58,32 +105,54 @@ export function RenderBagItem({ item }) {
     navigation.navigate("Item", { product: item });
   }
   function ToggleDelete(item) {
-    const NewBag = BagData.filter(
-      (product) =>
-        product.product_id != item.product_id || product.size != item.size
-    );
-    console.log(NewBag.length);
-    setBagData(NewBag);
+    let newCart = BagData.map((product) => {
+      if (product.product_id == item.product_id && product.size == item.size)
+      {
+       
+         Delete_Cart(Auth,item.product_id , item.size);
+         
+      }
+       
+
+      return product;
+    });
+    
   }
 
   const addQuantity = () => {
     let newCart = BagData.map((product) => {
       if (product.product_id == item.product_id && product.size == item.size)
-        product.quantity++;
+      {
+        const Quantity= Number(product.quantity)+1;
+         Edit_Cart(Auth,item.product_id , item.size, Quantity);
+         
+      }
+       
 
       return product;
     });
-    setBagData(newCart);
+   
   };
 
   const reduceQuantity = () => {
     let newCart = BagData.map((product) => {
       if (product.product_id == item.product_id && product.size == item.size)
-        product.quantity--;
+      {
+        if(product.quantity== 1)
+        {
+            Delete_Cart(Auth,item.product_id, item.size);
+        }
+        else{
+          const Quantity= Number(product.quantity)-1;
+         Edit_Cart(Auth,item.product_id , item.size, Quantity);
+        }
+        
+         
+      }
 
       return product;
     });
-    setBagData(newCart);
+    
   };
 
   useEffect(() => {
@@ -133,7 +202,8 @@ export function RenderBagItem({ item }) {
               <Ionicons name="trash" size={30} color={"white"} />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Ionicons name="heart-outline" size={30} color={"white"} />
+              {/* <Ionicons name="heart-outline" size={30} color={"white"} /> */}
+              <InFavor item={item} Auth={Auth} />
             </TouchableOpacity>
           </View>
         </View>

@@ -77,10 +77,13 @@ export default function Search() {
 
             </View>
          {(SearchData == null)? (
+            <View style={styles.container}>
             <LottieView
             source={require('../assets/Find.json')}
             autoPlay 
             />
+            </View>
+
             // <Text style={styles.inputText}> Nothing here</Text>
          ):
            
