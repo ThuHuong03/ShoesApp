@@ -39,7 +39,7 @@ export default function Signin({navigation}) {
 
           if(res.data =="SAI_THONG_TIN_DANG_NHAP")
           {
-            Alert.alert("Notice", "Youe Email or Password is incorrect! Please try again");
+            Alert.alert("Notice", "Your Email or Password is incorrect! Please try again");
             onChangeEmail('');
             onChangePassword('');
           }
@@ -80,7 +80,7 @@ export default function Signin({navigation}) {
                         value={Password}
                         placeholder='Password'
                          placeholderTextColor='#69A09E'
-                        //  secureTextEntry='true'
+                         secureTextEntry={true}
             >
 
             </TextInput>
