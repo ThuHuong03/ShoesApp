@@ -14,53 +14,33 @@ import axios from "axios";
 import Edit_Cart from "../API/Edit_Cart";
 import Get_Cart from "../API/Get_Cart";
 import Delete_Cart from "../API/Delete_Cart";
+import Add_Favor from "../API/Add_Favor";
+import Delete_Favor from "../API/Delete_Favor";
 
 
-const AddFavor =(item, Auth) =>{
-  const url= `${Auth.Localhost}add_favor.php`
-  axios.post(url,
-    {
-      user_id: Auth.User.id,
-      product_id: item.product_id
-    })
-    axios.get(`${Auth.Localhost}get_favor.php`)
-    .then((response )=> Auth.setFavoriteData(response.data))
-    .catch((error)=> console.log(error))
-}
 
-const DeleteFavor =(item, Auth) =>{
-  const url= `${Auth.Localhost}delete_favor.php`
-  axios.post(url,
-    {
-      user_id: Auth.User.id,
-      product_id: item.product_id
-    })
-    axios.get(`${Auth.Localhost}get_favor.php`)
-    .then((response )=> Auth.setFavoriteData(response.data))
-    .catch((error)=> console.log(error))
-}
 
 
 const InFavor =({item, Auth}) =>{
- if(Auth.FavoriteData == undefined)
+ if(Auth.FavoriteData.length ==0)
  return(
-<TouchableOpacity onPress={()=>AddFavor(item, Auth)}>
+<TouchableOpacity onPress={()=>Add_Favor(Auth, item.product_id)}>
     <Ionicons name="heart-outline" size={30} color={"white"} />
   </TouchableOpacity>
 )
-//  const Find= Auth.FavoriteData.find((product) => product.product_id ==item.product_id);
-const Find= true;
+ const Find= Auth.FavoriteData.find((product) => product.product_id ==item.product_id);
+
 
   if(Find== true)
   return (
-  <TouchableOpacity onPress={()=>AddFavor(item, Auth)}>
+  <TouchableOpacity onPress={()=>Add_Favor(Auth, item.product_id)}>
     <Ionicons name="heart-outline" size={30} color={"white"} />
   </TouchableOpacity>
   
   
 )
 else return (
-  <TouchableOpacity onPress={() =>DeleteFavor (item, Auth)}>
+  <TouchableOpacity onPress={() => Delete_Favor ( Auth, item.product_id)}>
     <Ionicons name="heart" size={30} color={"white"} />
   </TouchableOpacity>
   
@@ -345,16 +325,76 @@ export function RenderBillDetail({ item }) {
    
   );
 }
+export function RenderFavorItem({ item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const [Product, setProduct] = useState({ images: ["|"] });
+  const { BagData, setBagData, Localhost } = Auth;
+  const url = `${Auth.Localhost}images/`;
+
+  let Images = Product.images[0].split("|");
+  Images = Images.map((str) => str.trim());
+
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+
+  useEffect(() => {
+    const url = `${Localhost}product_detail.php?id=${item.product_id}`;
+    axios
+      .get(url)
+      .then((response) => setProduct(response.data[0]))
+      .catch((err) => console.log(err, url));
+  });
+  return (
+    <TouchableOpacity onPress={() => ToggleItem(Product)}>
+      <View style={styles.listItem}>
+        <Image
+          style={styles.ProductImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2 - 40,
+          }}
+        >
+          <Text style={styles.B_name}> {Product.nameProduct}</Text>
+          <Text style={styles.B_price}> {Product.price} VND</Text>
+          <Text style={styles.item_color}>
+            {" "}
+            {Product.color} | {Product.material} 
+          </Text>
+         
+
+          <View style={styles.btn}>
+           
+            <TouchableOpacity>
+              {/* <Ionicons name="heart-outline" size={30} color={"white"} /> */}
+              <InFavor item={item} Auth={Auth} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        </View>
+        <View style={styles.line} />
+      
+    </TouchableOpacity>
+  );
+}
 const styles = StyleSheet.create({
   Product: {
-    width: "50%",
+    width: Dimensions.get("window").width / 2 ,
+   
     alignContent: "center",
     alignItems: "center",
+   
   },
 
   ProductImg: {
     width: Dimensions.get("window").width / 2 - 40,
     height: Dimensions.get("window").width / 2 - 40,
+    alignSelf: 'center'
   },
   BillImg:
   {
@@ -364,6 +404,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     width: Dimensions.get("window").width / 2 ,
+  
     color: "white",
     fontWeight: "800",
     textAlign: "center",
@@ -371,7 +412,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 13,
-    width: Dimensions.get("window").width / 2 - 40,
+    width: Dimensions.get("window").width / 2 ,
     color: "white",
     // fontWeight:"normal",
     textAlign: "center",

@@ -23,10 +23,38 @@ import {
   import Might_like from "../src/Might_like";
 import { MyContext } from "../src/MyContext";
 import Add_Cart from "../API/Add_Cart";
+import Edit_Cart from "../API/Edit_Cart";
+import Add_Favor from "../API/Add_Favor";
+import Delete_Favor from "../API/Delete_Favor";
   
 
   
-  
+const InFavor =({id, Auth}) =>{
+  if(Auth.FavoriteData.length ==0)
+  return(
+ <TouchableOpacity onPress={()=>Add_Favor(Auth, id)}>
+     <Ionicons name="heart-outline" size={40} color={"white"} />
+   </TouchableOpacity>
+ )
+ 
+  const Find= Auth.FavoriteData.find((product) => product.product_id ==id);
+ 
+ 
+   if(Find== true)
+   return (
+   <TouchableOpacity onPress={()=>Add_Favor(Auth, id)}>
+     <Ionicons name="heart-outline" size={40} color={"white"} />
+   </TouchableOpacity>
+   
+   
+ )
+ else return (
+   <TouchableOpacity onPress={() => Delete_Favor ( Auth, id)}>
+     <Ionicons name="heart" size={40} color={"white"} />
+   </TouchableOpacity>
+   
+ )
+ }
   
   export default function Item() {
    
@@ -86,19 +114,16 @@ import Add_Cart from "../API/Add_Cart";
         const index = NewBag.findIndex(item => item.product_id === product.id && item.size === Size);
         if(index!= -1) 
         {
-          NewBag[index].quantity += Quantity;
+          const NewQuantity=  NewBag[index].quantity + Quantity;
+
+          Edit_Cart(Auth, product.id, Size, NewQuantity );
         }
         else 
-          NewBag.push({product_id: product.id, size: Size, quantity: Quantity, checked: 0});
-        Add_Cart(Auth, product.id, Size, Quantity)
-        // setBagData(NewBag);
-        
-        // Alert.alert("Congratulations","You have successfully added product into your bag")
+                 Add_Cart(Auth, product.id, Size, Quantity)
+      
     }
 
-    // useEffect(()=>{
-    //   console.log(product)
-    // },[])
+
     
     return (
       <SafeAreaView style={styles.container}>
@@ -161,7 +186,7 @@ import Add_Cart from "../API/Add_Cart";
                   <Custom_btn
                   Title="Buy Now"
                   />
-                  <Ionicons name="heart-outline" size={40} color={'#9FF8EF'}/>
+                 <InFavor Auth={Auth} item={product.id}/>
   
                   </View>
               <Text style={styles.color}>
@@ -172,7 +197,7 @@ import Add_Cart from "../API/Add_Cart";
               </Text>
               <Text style={styles.content}>{product.description} </Text>
               {/* Đoạn code hiện thông tin của giày */}
-            {/* <Might_like product= {product}/> */}
+            <Might_like product= {product}/>
  
   
   {/* Modal chọn size giày */}

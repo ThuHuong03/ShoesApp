@@ -30,10 +30,10 @@ export default function Signin({navigation}) {
       else{
         axios.post(`${Localhost}login.php`,
         {
-          // email: Email,
-          // password: Password
-          email: "1@gmail.com",
-          password: "1"
+          email: Email,
+          password: Password
+          // email: "1@gmail.com",
+          // password: "1"
         })
         .then(((res)=>{
 

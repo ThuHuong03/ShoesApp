@@ -30,14 +30,14 @@ export default function Might_like({Product}) {
       <Text style={styles.Title}> you might also like:</Text>
       
       <FlatList  
-      horizontal
+      horizontal={true}
       data={RCM_Data}
-      keyExtractor={item=> item.id}
+      keyExtractor={(item, index)=> index}
                 
        renderItem={({item})=>
-                  <View style={{marginHorizontal:30}}>
+                  
                 <RenderItem item={item}   />
-                  </View> 
+                 
               
                  }
                 

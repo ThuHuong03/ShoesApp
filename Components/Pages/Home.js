@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {ImageBackground, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, FlatList} from 'react-native';
 import {item_menu} from '../src/data.js'
 import Menu_bar from '../src/Menu_bar';
@@ -14,14 +14,27 @@ import { RenderItem } from '../src/Render.js';
 export default function Home  () {
   const navigation = useNavigation();
   const Auth= useContext(MyContext);
-  const {HomeData, Type}= Auth;
+  const {HomeData, Type, Localhost}= Auth;
+  const [inCollection, setInCollection]= useState([]);
   const ToggleSeeAll= (item)=>{
     navigation.navigate('SeeAll',{Type:item.type })
     // console.log('See all', item);
    
   }
-
+  const Get_inCollection= ()=>{
+  axios.get(`${Localhost}get_inCollection.php`)
+  .then((response)=>{
+    setInCollection(response.data);
+  })
   
+  .catch((error)=>{
+    console.log(error);
+  });
+}
+
+  useEffect(()=>{
+    Get_inCollection();
+  },[])
   
 
   return(
@@ -36,20 +49,44 @@ export default function Home  () {
         
         <Menu_bar/>
       </View>
-      <View style={styles.scroll_screen}>
-      
+      <ScrollView style={styles.scroll_screen}>
+     
+      <View >
+          <Text style={styles.Title} > New and Hot Feartures</Text>
+
+          <FlatList
+            
+              data={inCollection}
+              keyExtractor={(item, index) => index}
+             
+              horizontal={true}
+              
+              renderItem={({item})=>
+                
+                <RenderItem item={item}    />
+              
+              }
+              
+            />
+
+
+            
+            
+          </View>
       {
         Type.map((type)=>{
          
           return (
-          <View>
-          <Text style={styles.Title} key={type.id}> {type.name}</Text>
+          <View key={type.id}>
+          <Text style={styles.Title} > {type.name}</Text>
 
           <FlatList
               // data={productsContext.Products.filter((item) => item.rating.rate >= 4)}
               data={HomeData.filter((item) => item.idType == type.id)}
-              keyExtractor={(item, index) => item.id.toString()}
+              keyExtractor={(item, index) => index}
+             
               numColumns={2}
+              scrollEnabled={false}
               renderItem={({item})=>
                 
                 <RenderItem item={item}    />
@@ -68,7 +105,7 @@ export default function Home  () {
 
     
     
-      </View>
+      </ScrollView>
     </ImageBackground>
     
   </SafeAreaView>
@@ -121,7 +158,8 @@ Title:{
  fontSize: 22,
  fontWeight: 'bold',
  textAlign: 'left',
- textTransform:'uppercase'
+ textTransform:'uppercase',
+ padding:10
 },
 name:{
  fontSize:15,
@@ -155,7 +193,8 @@ see_all:{
  fontSize: 12,
  fontWeight: 'bold',
  textAlign: 'right',
- textTransform:'uppercase'
+ textTransform:'uppercase',
+ marginRight: 10,
 },
   
 });

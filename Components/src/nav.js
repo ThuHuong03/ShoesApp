@@ -28,6 +28,7 @@ import EditProfile from '../Pages/EditProfile';
 import CheckOut from '../Pages/CheckOut';
 import CheckOutMomo from '../Pages/CheckOutMomo';
 import Item from '../Pages/Item';
+import Favorites from '../Pages/Favorite';
 
 const Stack= createNativeStackNavigator();
 
@@ -60,13 +61,7 @@ return(
   
  
 
-  function Favorites(){
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Favorites Screen</Text>
-      </View>
-    );
-  }
+
  function Help(){
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

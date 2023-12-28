@@ -1,116 +1,119 @@
 import {
-    View,
-    Text,
-    SafeAreaView,
-    StyleSheet,
-    ImageBackground,
-    FlatList,
-    TouchableOpacity,
-    Image,
-  } from "react-native";
-  import React, { useRef, useEffect, useState, useContext } from "react";
-  import { Ionicons } from "@expo/vector-icons";
-  import { Bag_Data } from "../src/data";
-  import Menu_bar from "../src/Menu_bar";
-  import { useRoute } from "@react-navigation/native";
-  import { ScrollView } from "react-native-gesture-handler";
-  import Custom_btn from "../src/custom_btn";
-  import Might_like from "../src/Might_like";
-  import { useNavigation } from "@react-navigation/native";
-  import { RenderBagItem, RenderOrders } from "../src/Render";
-  import { MyContext } from "../src/MyContext";
-  import axios from "axios";
-  
-  export default function Order() {
-    const Auth= useContext(MyContext);
-    const {BagData,Localhost, Token}= Auth;
-    const [Orders, setOrders]= useState([]);
-  
-    navigation = useNavigation();
-    // const Checkout =()=>{
-    //   axios.post(`${Localhost}cart.php`,
-    //   {
-    //     "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjFAZ21haWwuY29tIiwiaWF0IjoxNzAzMjc1MDk5LCJleHBpcmUiOjE3MDM0NDc4OTl9.p_SLIxfy3GbKuvt0204SNsd1trK73dDTIXMgummVC8w",
-     
-    //      "arrayDetail": [
-    //          { "id": 2, "quantity": 1,"size":36 },
-    //          { "id": 3, "quantity": 1,"size": 38 }
-    //        ]
-         
-    //  }
-    //   )
-    // }
-    function fectchOders(){
-        axios.post(`${Localhost}order_history.php`,
-        {
-            "token":Token
-        })
-        .then((response)=> {
-            setOrders(response.data)
-        })
-        .catch((error)=> console.log(error, Token))
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ImageBackground,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import React, { useRef, useEffect, useState, useContext } from "react";
 
-    }
-    
-    useEffect(()=>{
-        fectchOders();
-    },[])
-  
-    // console.log(BagData)
-    return (
-      <SafeAreaView style={styles.container}>
-        <ImageBackground
-          style={styles.ImageBackground}
-          source={require("../assets/background.png")}
-        >
-          <View style={styles.Menubar}>
-            <Menu_bar />
-          </View>
-  
-          <View style={styles.scroll_screen}>
-            <FlatList
-              data={Orders}
-              keyExtractor={(item) => item.id}
-              numColumns={1}
-              renderItem={
-                ({ item }) => (
-                    // console.log(item)
-                //   <RenderBagItem item={item} />
-                  <RenderOrders item={item} />
-                 
-                )
-                
-              }
-            />
-            
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
-    );
+import Menu_bar from "../src/Menu_bar";
+
+import { useNavigation } from "@react-navigation/native";
+import { RenderBagItem, RenderOrders } from "../src/Render";
+import LottieView from "lottie-react-native";
+import { MyContext } from "../src/MyContext";
+import axios from "axios";
+
+export default function Order() {
+  const Auth = useContext(MyContext);
+  const { BagData, Localhost, Token } = Auth;
+  const [Orders, setOrders] = useState([]);
+
+  navigation = useNavigation();
+
+  function fectchOders() {
+    axios
+      .post(`${Localhost}order_history.php`, {
+        token: Token,
+      })
+      .then((response) => {
+        if (typeof response.data === "string") setOrders([]);
+        else setOrders(response.data);
+      })
+      .catch((error) => console.log(error, Token));
   }
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: 30,
-    },
-    ImageBackground: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    Menubar: {
-      height: "8%",
-      width: "100%",
-      flexDirection: "row",
-      padding: 25,
-      paddingTop: 20,
-      flex: 2,
-    },
-    scroll_screen: {
-      // backgroundColor:'white',
-      height: "90%",
-      width: "100%",
-    },
-  
-  });
-  
+  const ToggleShopping= ()=>{
+    navigation.navigate('Home');
+    // console.log("Shopping")
+  }
+
+  useEffect(() => {
+    fectchOders();
+  }, []);
+
+  // console.log(BagData)
+  return (
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        style={styles.ImageBackground}
+        source={require("../assets/background.png")}
+      >
+        <View style={styles.Menubar}>
+          <Menu_bar />
+        </View>
+
+        <View style={styles.scroll_screen}>
+          {Order.length == 0 ? (
+            <View style={styles.container}>
+              <LottieView source={require("../assets/Find.json")} autoPlay />
+              <TouchableOpacity onPress={ToggleShopping}>
+                <Text style={styles.Title}>
+                  You haven't bought anything! Let's Shopping
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View>
+              <FlatList
+                data={Orders}
+                keyExtractor={(item) => item.id}
+                numColumns={1}
+                renderItem={({ item }) => (
+                  // console.log(item)
+                  //   <RenderBagItem item={item} />
+                  <RenderOrders item={item} />
+                )}
+              />
+            </View>
+          )}
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 30,
+  },
+  ImageBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  Menubar: {
+    height: "8%",
+    width: "100%",
+    flexDirection: "row",
+    padding: 25,
+    paddingTop: 20,
+    flex: 2,
+  },
+  scroll_screen: {
+    // backgroundColor:'white',
+    height: "90%",
+    width: "100%",
+  },
+  Title:{
+    fontSize:30,
+    textAlign: 'center',
+    //padding:50,
+    color: '#9FF8EF',
+    fontWeight: 'bold',
+
+}
+});

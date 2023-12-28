@@ -27,7 +27,8 @@ function AuthProvider({ children }) {
     // console.log(user);
     setToken(data.token);
     setAuth(true);
-  };  const Localhost = "http://192.168.1.4/API/";
+  };  
+  const Localhost = "http://192.168.1.4/API/";
   const [Token, setToken] = useState("");
   const Logout = () => {
     setUser({});

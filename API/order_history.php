@@ -12,10 +12,8 @@ $token = $obj['token'];
 
 try{
 	$decoded = JWT::decode($token, $key, array('HS256'));
-	if($decoded->expire < time()){
-		echo 'HET_HAN';
-	}
-	else{
+	
+
 		$email = $decoded->email;
 		$sql = "SELECT b.id, b.date_order, b.status, b.total FROM bill b INNER JOIN users u ON u.id=b.id_customer where u.email ='$email'";
 		$result = $mysqli->query($sql);
@@ -23,7 +21,7 @@ try{
 		    $bill[] = $row;
 		}
 		print_r(json_encode($bill));
-	}
+	
 }
 
 catch(Exception $e){

@@ -40,10 +40,7 @@ export default function Bag() {
     navigation.navigate('Home');
     // console.log("Shopping")
   }
-  useFocusEffect(()=>{
 
-    
-  })
   useEffect(()=>{
  
   navigation.addListener('focus', ()=>{

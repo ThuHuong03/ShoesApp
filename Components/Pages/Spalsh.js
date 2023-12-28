@@ -37,7 +37,7 @@ export default function Spalsh() {
   return (
     <View style={styles.container}>
       <LottieView
-            source={require('../assets/Find.json')}
+            source={require('../assets/Loading.json')}
             autoPlay 
             />
             <Text style={styles.Title}> Loading data...</Text>
