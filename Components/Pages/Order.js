@@ -20,22 +20,32 @@ import axios from "axios";
 
 export default function Order() {
   const Auth = useContext(MyContext);
-  const { BagData, Localhost, Orders } = Auth;
-  
+  const { BagData, Localhost, Token } = Auth;
+  const [Orders, setOrders] = useState([]);
 
   navigation = useNavigation();
 
-  
+  function fectchOders() {
+    axios
+      .post(`${Localhost}order_history.php`, {
+        token: Token,
+      })
+      .then((response) => {
+        if (typeof response.data === "string") setOrders([]);
+        else setOrders(response.data);
+      })
+      .catch((error) => console.log(error, Token));
+  }
   const ToggleShopping= ()=>{
     navigation.navigate('Home');
     // console.log("Shopping")
   }
 
-  
-    
+  useEffect(() => {
+    fectchOders();
+  }, []);
 
-
- 
+  // console.log(BagData)
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -47,7 +57,7 @@ export default function Order() {
         </View>
 
         <View style={styles.scroll_screen}>
-          {Orders.length == 0 ? (
+          {Order.length == 0 ? (
             <View style={styles.container}>
               <LottieView source={require("../assets/Find.json")} autoPlay />
               <TouchableOpacity onPress={ToggleShopping}>
@@ -58,14 +68,13 @@ export default function Order() {
             </View>
           ) : (
             <View>
-              <Text style={styles.Title}> My Orders</Text>
               <FlatList
-              style={{height:'85%'}}
                 data={Orders}
                 keyExtractor={(item) => item.id}
                 numColumns={1}
                 renderItem={({ item }) => (
-                
+                  // console.log(item)
+                  //   <RenderBagItem item={item} />
                   <RenderOrders item={item} />
                 )}
               />

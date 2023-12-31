@@ -10,7 +10,6 @@ import {
   FlatList,
   TextInput,
   Alert,
-  Dimensions,
 } from "react-native";
 import { item_menu } from "../src/data.js";
 import Menu_bar from "../src/Menu_bar";
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   inputText:{
-    width: Dimensions.get("window").width/2,
+    width: 300,
     height: 40,
     borderWidth: 1,
     borderColor: '#B5B5B5',

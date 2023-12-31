@@ -78,7 +78,7 @@ import Get_Favor from "../API/Get_Favor";
         ):
         (
           <View>
-            <Text style={styles.Title}> My Favorite List</Text>
+  
            <FlatList
               data={FavoriteData}
               style={{height:'90%'}}

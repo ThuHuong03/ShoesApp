@@ -61,7 +61,7 @@ CREATE TABLE `bill_detail` (
 -- Dumping data for table `bill_detail`
 --
 
-INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`, `size`, `price`) VALUES
+INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`, `price`, `size`) VALUES
 (1, 35, 2, 1,'36', 1800000),
 (2, 35, 3, 1,'38', 1300000);
 
@@ -96,7 +96,7 @@ INSERT INTO `images` (`id`, `link`, `id_product`) VALUES
 (11,'Converse/chuck taylor/Converse.1.Chuck_Taylor.Natural_Ivory_High_1.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Natural_Ivory_High_3.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Natural_Ivory_High_2.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Natural_Ivory_High_4.jpg',11),
 (12,'Converse/chuck taylor/Converse.1.Chuck_Taylor.Navy_High_1.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Navy_High_3.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Navy_High_2.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Navy_High_4.jpg',12),
 (13,'Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_1.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_3.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_2.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_4.jpg',13),
-(14,'Converse/chuck taylor/Converse.1.Chuck_Taylor.Red_High_1.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Red_High_3.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Red_High_2.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Red_High_4.jpg' ,14),
+(14,'Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_1.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_3.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_2.jpg | Converse/chuck taylor/Converse.1.Chuck_Taylor.Optical_White_High_4.jpg' ,14),
 (15,'Converse/one star pro/Converse.5.One_Star_Pro.Black_1.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Black_3.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Black_2.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Black_4.jpg',15),
 (16,'Converse/one star pro/Converse.5.One_Star_Pro.Erget_1.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Erget_3.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Erget_2.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Erget_4.jpg',16),
 (17,'Converse/one star pro/Converse.5.One_Star_Pro.Green_1.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Green_3.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Green_2.jpg | Converse/one star pro/Converse.5.One_Star_Pro.Green_4.jpg',17),
@@ -231,7 +231,7 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 INSERT INTO `cart` (`id`,`user_id`, `product_id`, `quantity`, `size`, `checked`) VALUES
-(1,7,1,1,'36', 0);
+(1,,1,1,'36', 0);
 
 --
 -- create table favor

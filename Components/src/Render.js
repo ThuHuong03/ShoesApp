@@ -28,10 +28,10 @@ const InFavor =({item, Auth}) =>{
     <Ionicons name="heart-outline" size={30} color={"white"} />
   </TouchableOpacity>
 )
- const Find= Auth.FavoriteData.some((product) => product.product_id ===item.product_id);
+ const Find= Auth.FavoriteData.find((product) => product.product_id ==item.product_id);
 
 
-  if(Find!= true)
+  if(Find== true)
   return (
   <TouchableOpacity onPress={()=>Add_Favor(Auth, item.product_id)}>
     <Ionicons name="heart-outline" size={30} color={"white"} />
