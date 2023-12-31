@@ -78,10 +78,10 @@ export default function Bag() {
       ):
       (
         <View>
-
+            <Text style={styles.Title}> My Bag</Text>
          <FlatList
             data={BagData}
-            style={{height:'90%'}}
+            style={{height:'85%'}}
             keyExtractor={(item, index) => index}
             numColumns={1}
             renderItem={

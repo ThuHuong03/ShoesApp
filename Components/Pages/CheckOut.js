@@ -25,6 +25,7 @@ import { RenderBillDetail, RenderItem } from "../src/Render";
 import { Ionicons } from "@expo/vector-icons";
 import Custom_btn from "../src/custom_btn";
 import Delete_All_Cart from "../API/Delete_All_Cart";
+import Get_Orders from "../API/Get_Orders";
 
 
 export default function CheckOut({ Type }) {
@@ -58,6 +59,7 @@ export default function CheckOut({ Type }) {
     )
     .then(()=>{
       Delete_All_Cart(Auth);
+      Get_Orders(Auth);
     })
     
     navigation.navigate('Bag');

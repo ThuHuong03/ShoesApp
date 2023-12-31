@@ -17,16 +17,16 @@ export default function App() {
 
 
   return (
-  //   <AuthProvider>
-  //     <NavigationContainer>
-  //       <Stack.Navigator screenOptions={{headerShown: false}}>
-  //         <Stack.Screen name ='Splash' component={Spalsh} />
-  //         <Stack.Screen name= 'MainScreen' component={Nav} />
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name ='Splash' component={Spalsh} />
+          <Stack.Screen name= 'MainScreen' component={Nav} />
+        </Stack.Navigator>
+      </NavigationContainer>
        
-  //  </AuthProvider>
-  <Help/>
+   </AuthProvider>
+
   
 
   );

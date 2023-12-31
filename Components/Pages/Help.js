@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Dimensions } from "react-native";
 import MapView from "react-native-maps";
 import React from "react";
 import { Marker } from "react-native-maps";
@@ -12,7 +12,7 @@ export default function Help() {
         source={require("../assets/background.png")}
       >
         <View style={styles.Menubar}>
-          {/* <Menu_bar /> */}
+          <Menu_bar />
         </View>
 
         <View style={styles.scroll_screen}>
@@ -32,7 +32,7 @@ export default function Help() {
       />
       </MapView>
       <Text style={styles.Title}> Any inquiries can be addressed at our store or through our hotline: 21520905</Text>
-      <Text > We will always be dedicated to addressing all inquiries with care and diligence</Text>
+      <Text style= {styles.sub_title}> We will always be dedicated to addressing all inquiries with care and diligence</Text>
         </View>
  
         </ImageBackground>
@@ -44,6 +44,7 @@ export default function Help() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 30,
   },
 background:{
     flex: 1,
@@ -55,12 +56,12 @@ background:{
     alignItems: "center",
   },
   map: {
-    width: "80%",
+    width:Dimensions.get("window").width - 50,
     height: "50%",
     alignSelf: "center",
-    borderBlockColor: 'white',
+    borderColor: 'white',
     borderRadius: '10',
-    borderWidth: '1',
+    borderWidth: 1
   },
   
   Menubar: {
@@ -87,6 +88,7 @@ background:{
   sub_title: {
     color: "white",
     fontSize: 15,
+    marginLeft: 25,
     fontWeight: "300",
   },
 });

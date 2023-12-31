@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
+import Get_Orders from "../API/Get_Orders";
 
 const MyContext = createContext();
 
@@ -12,6 +13,7 @@ function AuthProvider({ children }) {
   const [FavoriteData, setFavoriteData] = useState([]);
   const [User, setUser] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
+  const [Orders, setOrders] = useState([]);
   const Signin = (data) => {
     const url = `${Localhost}get_favor.php?user_id=${data.user.id}`;
     axios
@@ -27,8 +29,9 @@ function AuthProvider({ children }) {
     // console.log(user);
     setToken(data.token);
     setAuth(true);
+    
   };  
-  const Localhost = "http://192.168.1.4/API/";
+  const Localhost = "http://192.168.1.2/API/";
   const [Token, setToken] = useState("");
   const Logout = () => {
     setUser({});
@@ -50,7 +53,8 @@ function AuthProvider({ children }) {
     Logout,
     Token,
     FavoriteData, setFavoriteData,
-    totalPrice, setTotalPrice
+    totalPrice, setTotalPrice,
+    Orders, setOrders
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

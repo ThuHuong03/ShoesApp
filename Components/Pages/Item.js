@@ -37,10 +37,10 @@ const InFavor =({id, Auth}) =>{
    </TouchableOpacity>
  )
  
-  const Find= Auth.FavoriteData.find((product) => product.product_id ==id);
+  const Find= Auth.FavoriteData.some((product) => product.product_id ===id);
  
  
-   if(Find== true)
+   if(Find!= true)
    return (
    <TouchableOpacity onPress={()=>Add_Favor(Auth, id)}>
      <Ionicons name="heart-outline" size={40} color={"white"} />
@@ -49,7 +49,7 @@ const InFavor =({id, Auth}) =>{
    
  )
  else return (
-   <TouchableOpacity onPress={() => Delete_Favor ( Auth, id)}>
+   <TouchableOpacity onPress={() => Delete_Favor(Auth, id)}>
      <Ionicons name="heart" size={40} color={"white"} />
    </TouchableOpacity>
    
@@ -186,7 +186,7 @@ const InFavor =({id, Auth}) =>{
                   <Custom_btn
                   Title="Buy Now"
                   />
-                 <InFavor Auth={Auth} item={product.id}/>
+                 <InFavor Auth={Auth} id={product.id}/>
   
                   </View>
               <Text style={styles.color}>

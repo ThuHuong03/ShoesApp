@@ -26,7 +26,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("Home");
+            navigation.navigate("Main", {Screen:"Home"});
           }}
         >
           <Home width={30} height={30}></Home>
@@ -45,7 +45,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("MyBag");
+            navigation.navigate("MyBag", {Screen: 'Bag'});
           }}
         >
           <Bag width={30} height={30}></Bag>
@@ -53,7 +53,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("MyProfile");
+            navigation.navigate("MyProfile", {Screen: 'Profile'});
           }}
         >
           <User width={30} height={30}></User>

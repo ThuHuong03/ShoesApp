@@ -14,6 +14,7 @@ export default function Add_Favor(Auth, Product_id) {
  })
  .then((response) =>{
     Alert.alert("Congratulations", "You have successfully added product into your Favorite List!");
+    console.log(Product_id);
     Get_Favor(Auth);
  })
 .catch((err) => console.log(err))
