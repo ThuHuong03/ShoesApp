@@ -28,6 +28,7 @@ import EditProfile from '../Pages/EditProfile';
 import CheckOut from '../Pages/CheckOut';
 import CheckOutMomo from '../Pages/CheckOutMomo';
 import Item from '../Pages/Item';
+import Help from '../Pages/Help';
 import Favorites from '../Pages/Favorite';
 
 const Stack= createNativeStackNavigator();
@@ -62,13 +63,7 @@ return(
  
 
 
- function Help(){
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Help Screen</Text>
-    </View>
-  );
- }
+
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {

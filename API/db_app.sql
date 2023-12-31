@@ -231,7 +231,7 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 INSERT INTO `cart` (`id`,`user_id`, `product_id`, `quantity`, `size`, `checked`) VALUES
-(1,13,1,1,'36', 0);
+(1,,1,1,'36', 0);
 
 --
 -- create table favor
