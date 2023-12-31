@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { MyContext } from '../src/MyContext.js';
 import { RenderItem } from '../src/Render.js';
+import Get_Orders from '../API/Get_Orders.js';
 
 
 
@@ -34,6 +35,7 @@ export default function Home  () {
 
   useEffect(()=>{
     Get_inCollection();
+    Get_Orders(Auth);
   },[])
   
 

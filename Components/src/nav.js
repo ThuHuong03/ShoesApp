@@ -30,6 +30,7 @@ import CheckOutMomo from '../Pages/CheckOutMomo';
 import Item from '../Pages/Item';
 import Help from '../Pages/Help';
 import Favorites from '../Pages/Favorite';
+import Order_Details from '../Pages/Order_Details';
 
 const Stack= createNativeStackNavigator();
 
@@ -59,7 +60,16 @@ return(
 )
   
 }
+
+function MyOrder (){
+  return(
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Order'>
+    <Stack.Screen component={Order} name='Order'/>
+    <Stack.Screen component={Order_Details} name='Order Detail'/>
+  </Stack.Navigator>
+  )
   
+} 
  
 
 
@@ -100,8 +110,11 @@ function MyDrawer() {
         drawerIcon: ()=> (<Bag_white  style={{ with: 30, height: 30}}/>),
         drawerLabel:"Bag"
         }}/>
-      <Drawer.Screen name="Oder" component={Order} 
-      options={{drawerIcon: ()=> (<Ordersvg  style={{ with: 30, height: 30}}/>)}}/>
+      <Drawer.Screen name="MyOder" component={MyOrder} 
+      options={{drawerIcon: ()=> (<Ordersvg  style={{ with: 30, height: 30}}/>),
+      drawerLabel:"My Order"
+      }}/>
+
       <Drawer.Screen name="Favorites" component={Favorites} 
       options={{drawerIcon: ()=> (<Favorite  style={{ with: 30, height: 30}}/>)}}/>
       <Drawer.Screen name="Help" component={Help} 

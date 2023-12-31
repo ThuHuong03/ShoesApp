@@ -78,10 +78,10 @@ import Get_Favor from "../API/Get_Favor";
         ):
         (
           <View>
-  
+    <Text style={styles.Title}> My Favorite List</Text>
            <FlatList
               data={FavoriteData}
-              style={{height:'90%'}}
+              style={{height:'85%'}}
               keyExtractor={(item, index) => index}
               numColumns={1}
               renderItem={

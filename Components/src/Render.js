@@ -28,10 +28,10 @@ const InFavor =({item, Auth}) =>{
     <Ionicons name="heart-outline" size={30} color={"white"} />
   </TouchableOpacity>
 )
- const Find= Auth.FavoriteData.find((product) => product.product_id ==item.product_id);
+ const Find= Auth.FavoriteData.some((product) => product.product_id ===item.product_id);
 
 
-  if(Find== true)
+  if(Find!= true)
   return (
   <TouchableOpacity onPress={()=>Add_Favor(Auth, item.product_id)}>
     <Ionicons name="heart-outline" size={30} color={"white"} />
@@ -231,15 +231,15 @@ export function RenderSearchItem({ item }) {
   );
 }
 
-export function RenderOrders({ item }) {
+export function RenderOrders( {item} ) {
   navigation = useNavigation();
   const Auth = useContext(MyContext);
 
   function ToggleItem(item) {
-    navigation.navigate("Item", { product: item });
+    navigation.navigate("Order Detail", { id: item.id });
   }
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={()=> ToggleItem(item)}>
       <View style={styles.listItem}>
         <View
           style={{
@@ -264,13 +264,7 @@ export function RenderOrders({ item }) {
             </Text>
           </View>
 
-          {/* <Text style={styles.B_name}> {item.date_order}</Text>
-        <Text style={styles.B_price}> Total: {item.total} VND</Text>
-
-        <Text style={styles.item_color}>
-          
-          {item.status} 
-        </Text> */}
+       
         </View>
       </View>
       <View style={styles.line} />
@@ -372,6 +366,66 @@ export function RenderFavorItem({ item }) {
            
             <TouchableOpacity>
               {/* <Ionicons name="heart-outline" size={30} color={"white"} /> */}
+              <InFavor item={item} Auth={Auth} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        </View>
+        <View style={styles.line} />
+      
+    </TouchableOpacity>
+  );
+}
+
+export function RenderBill( {item }) {
+  navigation = useNavigation();
+  const Auth = useContext(MyContext);
+  const [Product, setProduct] = useState({ images: ["|"] });
+  const { BagData, setBagData, Localhost } = Auth;
+  const url = `${Auth.Localhost}images/`;
+
+  let Images = Product.images[0].split("|");
+  Images = Images.map((str) => str.trim());
+
+  function ToggleItem(item) {
+    navigation.navigate("Item", { product: item });
+  }
+
+  useEffect(() => {
+    const url = `${Localhost}product_detail.php?id=${item.id_product}`;
+    axios
+      .get(url)
+      .then((response) => setProduct(response.data[0]))
+      .catch((err) => console.log(err, url));
+
+      
+  });
+  return (
+    <TouchableOpacity onPress={() => ToggleItem(Product)}>
+      <View style={styles.listItem}>
+        <Image
+          style={styles.ProductImg}
+          source={{ uri: `${url}${Images[0]}` }}
+        ></Image>
+        <View
+          style={{
+            justifyContent: "space-around",
+            marginLeft: 25,
+            width: Dimensions.get("window").width / 2 - 40,
+          }}
+        >
+          <Text style={styles.B_name}> {Product.nameProduct}</Text>
+          <Text style={styles.B_price}> {Product.price} VND</Text>
+          <Text style={styles.item_color}>
+            {" "}
+            {Product.color} | {Product.material} | Size: {item.size} | Quantity: {item.quantity} 
+          </Text>
+         
+
+          <View style={styles.btn}>
+           
+            <TouchableOpacity>
+           
               <InFavor item={item} Auth={Auth} />
             </TouchableOpacity>
           </View>
