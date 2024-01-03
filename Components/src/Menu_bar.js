@@ -26,7 +26,7 @@ const Menu_bar = () => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() => {
-            navigation.navigate("Main", {Screen:"Home"});
+            navigation.navigate("Home");
           }}
         >
           <Home width={30} height={30}></Home>

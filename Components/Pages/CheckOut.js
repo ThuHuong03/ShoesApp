@@ -19,14 +19,13 @@ import Menu_bar from "../src/Menu_bar";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MyContext } from "../src/MyContext";
-import Get_Product_byType from "../API/Get_Product_byType";
+
 import axios from "axios";
 import { RenderBillDetail, RenderItem } from "../src/Render";
-import { Ionicons } from "@expo/vector-icons";
+
 import Custom_btn from "../src/custom_btn";
 import Delete_All_Cart from "../API/Delete_All_Cart";
 import Get_Orders from "../API/Get_Orders";
-
 
 export default function CheckOut({ Type }) {
   const Auth = useContext(MyContext);
@@ -36,39 +35,37 @@ export default function CheckOut({ Type }) {
   const [Phone, setPhone] = useState(User.phone);
   const [Address, setAddress] = useState(User.address);
   const [isModalVisible, setModalVisible] = useState(false);
-  
-    const Route= useRoute();
-    const {Total}= Route.params;
-    
-   const Checkout = ()=>{
 
+  const Route = useRoute();
+  const { Total } = Route.params;
+
+  const Checkout = () => {
     Alert.alert("Congratulations", "You have successfully checked out");
     // console.log(BagData);
-    const arrayDetail= BagData.map(({product_id, user_id, checked, ...rest})=> ({id: product_id, ...rest}))
-    console.log(arrayDetail);
-      axios.post(`${Localhost}cart.php`,
-    {
-      "token":Token,
-   
-       "arrayDetail": arrayDetail
-         
-         
-       
-     }
+    const arrayDetail = BagData.map(
+      ({ product_id, user_id, checked, id, ...rest }) => ({
+        id: product_id,
+        ...rest,
+      })
+    );
 
-    )
-    .then(()=>{
-      Delete_All_Cart(Auth);
-      Get_Orders(Auth);
-    })
-    
-    navigation.navigate('Bag');
+    axios
+      .post(`${Localhost}cart.php`, {
+        token: Token,
 
-   } 
-   const CheckOutMomo = ()=>{
-    navigation.navigate('CheckOutMomo');
-   }
-   
+        arrayDetail: arrayDetail,
+      })
+      .then(() => {
+        Delete_All_Cart(Auth);
+        Get_Orders(Auth);
+      });
+
+    navigation.navigate("Bag");
+  };
+  const CheckOutMomo = () => {
+    Alert.alert("Sorry", "Momo Payment Method is not available now");
+  };
+
   const ChangeInfo = () => {
     if (Phone == "" || FullName == "" || Address == "") {
       Alert.alert("Notice", "Please fill your information throughly...");
@@ -87,7 +84,7 @@ export default function CheckOut({ Type }) {
       })
       .catch((error) => console.log(error));
   };
-  
+
   // function conmponentDidMount() {
   //   axios
   //     .get(`${Auth.Localhost}product_by_type.php?id_type=${Type.id}&page=1`)
@@ -112,11 +109,10 @@ export default function CheckOut({ Type }) {
         <View style={styles.Menubar}>
           <Menu_bar />
         </View>
-    <Text style={styles.Title}> Check out</Text>
+        <Text style={styles.Title}> Check out</Text>
         <View style={styles.scroll_screen}>
-          <ScrollView style={{height:350}}>
+          <ScrollView style={{ height: 350 }}>
             <View style={styles.inputContainer}>
-              
               <Text style={styles.title}>Full name:</Text>
               <TextInput
                 style={styles.inputText}
@@ -212,36 +208,27 @@ export default function CheckOut({ Type }) {
                     color={"#39A7FF"}
                   />
                 </View>
-                
               </View>
             </View>
           </Modal>
-
 
           <Text style={styles.title}>Bill Detail:</Text>
           <FlatList
             data={BagData}
             keyExtractor={(item) => item.id}
-           
-            renderItem={
-              ({ item }) => (
-                  // console.log(item)
-                <RenderBillDetail item={item} />
-                // <Text> H</Text>
-               
-              )
-              
-            }
+            renderItem={({ item }) => (
+              // console.log(item)
+              <RenderBillDetail item={item} />
+              // <Text> H</Text>
+            )}
           />
           <Text style={styles.title}> Total: {Total} VND</Text>
 
           <Text style={styles.title}> Payment Method:</Text>
-                <View style={styles.pick_box}>
-                    <Custom_btn Title="COD" onPress={Checkout}/>
-               <Custom_btn Title="MOMO" onPress={CheckOutMomo}/>
-                </View>
-               
-          
+          <View style={styles.pick_box}>
+            <Custom_btn Title="COD" onPress={Checkout} />
+            <Custom_btn Title="MOMO" onPress={CheckOutMomo} />
+          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -353,12 +340,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     textTransform: "uppercase",
-    padding:10
+    padding: 10,
   },
-  pick_box:{
-    flexDirection:'row',
-    justifyContent: 'space-between',
-    
+  pick_box: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+
     // width: Dimensions.get("window").width/2 - 50,
     padding: 25,
   },

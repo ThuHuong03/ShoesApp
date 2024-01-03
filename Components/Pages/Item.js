@@ -17,7 +17,7 @@ import {
   import { Ionicons } from "@expo/vector-icons";
   import { Data } from "../src/data";
   import Menu_bar from "../src/Menu_bar";
-  import { useRoute } from "@react-navigation/native";
+  import { useNavigation, useRoute } from "@react-navigation/native";
   import { ScrollView } from "react-native-gesture-handler";
   import Custom_btn from "../src/custom_btn";
   import Might_like from "../src/Might_like";
@@ -57,7 +57,7 @@ const InFavor =({id, Auth}) =>{
  }
   
   export default function Item() {
-   
+   const navigation= useNavigation();
     const route = useRoute();
     const Auth =useContext(MyContext);
     const {BagData, setBagData, Localhost}= Auth;
@@ -122,6 +122,25 @@ const InFavor =({id, Auth}) =>{
                  Add_Cart(Auth, product.id, Size, Quantity)
       
     }
+    function ToggleBuyNow(){
+      if(Size == '--' && Quantity ==0) {
+        Alert.alert ("Notice","Please select a size and quantity")
+        return;
+      }
+      else if(Quantity == 0) {
+        Alert.alert ("Notice","Please select a quantity")
+        return;
+      }
+      else if(Size == '--') {
+        Alert.alert ("Notice","Please select a size")
+        return;
+      }
+      
+
+        
+       navigation.navigate('Buy Now', {product_id: product.id, size: Size, quantity: Quantity, Total: Quantity*product.price})
+    }
+
 
 
     
@@ -185,6 +204,7 @@ const InFavor =({id, Auth}) =>{
                   />
                   <Custom_btn
                   Title="Buy Now"
+                  onPress={()=>{ToggleBuyNow()}}
                   />
                  <InFavor Auth={Auth} id={product.id}/>
   

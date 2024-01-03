@@ -27,7 +27,7 @@ export default function Profile() {
   const ToggleEdit = ()=>{
     navigation.navigate('EditProfile' )
   }
-  console.log(User);
+  
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground

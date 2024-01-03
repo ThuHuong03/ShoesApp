@@ -61,7 +61,7 @@ CREATE TABLE `bill_detail` (
 -- Dumping data for table `bill_detail`
 --
 
-INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`, `price`, `size`) VALUES
+INSERT INTO `bill_detail` (`id`, `id_bill`, `id_product`, `quantity`,  `size`,`price`) VALUES
 (1, 35, 2, 1,'36', 1800000),
 (2, 35, 3, 1,'38', 1300000);
 

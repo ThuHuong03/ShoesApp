@@ -13,10 +13,7 @@ import Help_icon from '../assets/help.svg';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Signin from '../Pages/Signin';
 import Signup from '../Pages/Signup';
-import CHUCK_TAYLOR from '../Pages/CHUCK_TAYLOR';
-import CHUCK_70 from '../Pages/CHUCK_70';
-import ONE_STAR from '../Pages/ONE_STAR';
-import RUN_HIKE from '../Pages/RUN_HIKE';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Bag from '../Pages/Bag';
 import Profile from '../Pages/Profile';
@@ -26,7 +23,7 @@ import Main from './Main';
 import axios from 'axios';
 import EditProfile from '../Pages/EditProfile';
 import CheckOut from '../Pages/CheckOut';
-import CheckOutMomo from '../Pages/CheckOutMomo';
+
 import Item from '../Pages/Item';
 import Help from '../Pages/Help';
 import Favorites from '../Pages/Favorite';
@@ -54,7 +51,7 @@ return(
   <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Bag'>
     <Stack.Screen component={Bag} name='Bag' />
     <Stack.Screen component={CheckOut} name='CheckOut'/>
-    <Stack.Screen component={CheckOutMomo} name='CheckOutMomo'/>
+    
     
   </Stack.Navigator>
 )

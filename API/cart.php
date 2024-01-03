@@ -11,12 +11,8 @@ include('connect/connect.php');
 	$arrayDetail = $obj['arrayDetail'];
 	$token = $obj['token'];
 
-try{
-	$decoded = JWT::decode($token, $key, array('HS256'));
-	if($decoded->expire < time()){
-		echo 'HET_HAN';
-	}
-	else{
+
+	try{
 		$email = $decoded->email;
 		$sql = "SELECT * FROM users where email = '$email'";
 		$result = $mysqli->query($sql);
@@ -46,7 +42,7 @@ try{
 		}
 		echo 'THEM_THANH_CONG';
 	}
-}
+
 catch(Exception $e){
 	echo 'TOKEN_KHONG_HOP_LE';
 }
