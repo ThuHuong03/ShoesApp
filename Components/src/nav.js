@@ -95,10 +95,6 @@ function MyDrawer() {
     >
       
       <Drawer.Screen name="Main" component={Main} options={{drawerLabel: 'New and Feartures'}}  />
-      <Drawer.Screen name="CHUCK TAYLOR" component={CHUCK_TAYLOR} />
-      <Drawer.Screen name="CHUCK 70" component={CHUCK_70} />
-      <Drawer.Screen name="ONE STAR" component={ONE_STAR} />
-      <Drawer.Screen name="RUN HIKE" component={RUN_HIKE} />
       <Drawer.Screen name="MyProfile" component={MyProfile} 
       options={{
         drawerIcon: ()=> (<User_white  style={{ with: 30, height: 30}}/>),
