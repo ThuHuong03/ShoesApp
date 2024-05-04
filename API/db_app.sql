@@ -7,6 +7,8 @@
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
+-- postman, xampp, dựa trên cái này viết db, viết api
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
